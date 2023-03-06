@@ -1,0 +1,1 @@
+pub const TABCOMPLETE_FILE: &str = "TABCOMPLETE_FILE";
