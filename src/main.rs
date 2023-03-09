@@ -34,7 +34,7 @@ pub fn run_with_args(root_args: &RootArgs) -> Result<(), std::io::Error> {
     Ok(())
 }
 
-static DEFAULT_CONFIG_DATA: &[u8] = include_bytes!("../resource/git.nu");
+static DEFAULT_CONFIG_DATA: &[u8] = include_bytes!("../resource/completions.nu");
 fn complete(root_args: &RootArgs, complete_args: &CompleteArgs) -> Result<(), std::io::Error> {
     let arg_str = &complete_args.args_str;
     let pwd = env::current_dir()?;

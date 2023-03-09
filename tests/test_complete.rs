@@ -6,7 +6,7 @@ use rstest::rstest;
 use rstest_reuse::{self, *};
 
 mod testenv;
-use crate::testenv::TestEnv;
+pub use testenv::*;
 
 #[template]
 #[rstest]

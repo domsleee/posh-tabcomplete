@@ -4,9 +4,9 @@ Blazing fast tab completion for powershell.
 
 Features:
 * Fast startup and execution using `nu-engine`
-* Extendable using `.nu` files, with [git-completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/git/git-completions.nu) built in
+* Extendable using `.nu` files, with built in support for commmon tasks like `git` and `npm run`
 
-Currently only `git` is supported. It can be extended by specifying a `.nu` file in the `TABCOMPLETE_FILE` environment variable.
+By default, [completions.nu](./resource/completions.nu) is used. An alternative `.nu` file can be specified in the `TABCOMPLETE_FILE` environment variable.
 
 ## Installation
 
@@ -23,6 +23,11 @@ Invoke-Expression (&tabcomplete init | Get-Content)
 ```
 
 [crates.io]: https://crates.io/crates/starship
+
+## Built in completions
+* [git completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/git/git-completions.nu). These are also combined with [git auto generated completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/auto-generate/completions/git.nu)
+* [npm completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/npm/npm-completions.nu)
+* [cargo completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/cargo/cargo-completions.nu)
 
 ## Benchmarks
 
