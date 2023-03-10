@@ -1,12 +1,15 @@
 use posh_tabcomplete::TABCOMPLETE_FILE;
-use regex::Regex;
 use std::{
-    env, fs,
+    env,
+    ffi::OsString,
+    fs,
     io::{self, Write},
     path::PathBuf,
     process::{Command, Output},
 };
 use tempfile::TempDir;
+
+const PATH: &str = "PATH";
 
 pub struct TestEnv {
     pub shell: String,
@@ -71,11 +74,15 @@ impl TestEnv {
         let file_contents = format!(". {}\n{command}", self.profile_path.to_str().unwrap());
         let file_path = root.join("file.ps1");
         fs::File::create(&file_path)?.write_all(file_contents.as_bytes())?;
+        let target_dir = debug_target_dir();
+        let paths_var = prepend_to_path_var(&target_dir);
 
+        println!("target_dir {target_dir:?}");
         let output = Command::new(&self.shell)
             .arg("-NoProfile")
             .arg("-File")
             .arg(file_path.to_str().unwrap())
+            .env(PATH, paths_var)
             .current_dir(root)
             .output()
             .expect("failed to execute");
@@ -85,6 +92,17 @@ impl TestEnv {
 
         Ok(output)
     }
+}
+
+fn prepend_to_path_var(path: &PathBuf) -> OsString {
+    let current_path = env::var_os(PATH).expect("PATH must be defined");
+    let split_paths = env::split_paths(&current_path);
+    let mut new_paths = vec![path.clone()];
+    for existing_path in split_paths {
+        new_paths.push(existing_path);
+    }
+    let join_paths = env::join_paths(&new_paths).expect("can join");
+    join_paths
 }
 
 fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBuf), io::Error> {
@@ -103,14 +121,6 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
         let mut init_str = profile_prefix_data.join("\n\n");
         init_str.push('\n');
         init_str.push_str(&String::from_utf8(output.stdout).expect("parsed as utf8"));
-        let re1 = Regex::new(r"tabcomplete complete").unwrap();
-        init_str = re1
-            .replace(&init_str, format!("{exe:?} complete"))
-            .to_string();
-        let re2 = Regex::new(r"tabcomplete nu\-commands").unwrap();
-        init_str = re2
-            .replace(&init_str, format!("{exe:?} nu-commands"))
-            .to_string();
         let profile_path = root.join("tabcompleteProfile.ps1");
         fs::File::create(&profile_path)?.write_all(init_str.as_bytes())?;
 

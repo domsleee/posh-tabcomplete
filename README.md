@@ -1,4 +1,4 @@
-# posh-tabcomplete
+# posh-tabcompletelkllkklm,m,,m,m,,,mm,,m,mm,,,mm,m,,,,m,,,m
 [![Crates.io](https://img.shields.io/crates/v/posh-tabcomplete.svg)](https://crates.io/crates/posh-tabcomplete)
 [![Build Status](https://github.com/domsleee/posh-tabcomplete/actions/workflows/ci.yml/badge.svg)](https://github.com/domsleee/posh-tabcomplete/actions/workflows/ci.yml)
 
@@ -12,7 +12,7 @@ By default, [completions.nu](./resource/completions.nu) is used. An alternative 
 
 ## Installation
 
-### Step 1. Install
+### Step 1. Install binary
 
 | Repository      | Instructions                             |
 | --------------- | ---------------------------------------  |
@@ -28,7 +28,7 @@ Invoke-Expression (&tabcomplete init | Get-Content)
 
 ## Built in completions
 * [git completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/git/git-completions.nu). These are also combined with [git auto generated completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/auto-generate/completions/git.nu)
-* [npm completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/npm/npm-completions.nu)
+* [npm `run` completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/npm/npm-completions.nu)
 * [cargo completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/cargo/cargo-completions.nu)
 
 ## Benchmarks
