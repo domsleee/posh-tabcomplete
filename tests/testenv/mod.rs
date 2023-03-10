@@ -1,12 +1,23 @@
+#![allow(unused_macros)] // FIXME
 use posh_tabcomplete::TABCOMPLETE_FILE;
-use regex::Regex;
+use rstest_reuse::*;
 use std::{
-    env, fs,
+    env,
+    ffi::OsString,
+    fs,
     io::{self, Write},
     path::PathBuf,
     process::{Command, Output},
 };
 use tempfile::TempDir;
+
+const PATH: &str = "PATH";
+
+#[template]
+#[rstest]
+#[case("pwsh")]
+#[cfg_attr(windows, case("powershell"))]
+pub fn shell_to_use(#[case] shell: &str) {}
 
 pub struct TestEnv {
     pub shell: String,
@@ -71,11 +82,15 @@ impl TestEnv {
         let file_contents = format!(". {}\n{command}", self.profile_path.to_str().unwrap());
         let file_path = root.join("file.ps1");
         fs::File::create(&file_path)?.write_all(file_contents.as_bytes())?;
+        let target_dir = debug_target_dir();
+        let paths_var = prepend_to_path_var(&target_dir);
 
+        println!("target_dir {target_dir:?}");
         let output = Command::new(&self.shell)
             .arg("-NoProfile")
             .arg("-File")
             .arg(file_path.to_str().unwrap())
+            .env(PATH, paths_var)
             .current_dir(root)
             .output()
             .expect("failed to execute");
@@ -87,6 +102,17 @@ impl TestEnv {
     }
 }
 
+fn prepend_to_path_var(path: &PathBuf) -> OsString {
+    let current_path = env::var_os(PATH).expect("PATH must be defined");
+    let split_paths = env::split_paths(&current_path);
+    let mut new_paths = vec![path.clone()];
+    for existing_path in split_paths {
+        new_paths.push(existing_path);
+    }
+
+    env::join_paths(&new_paths).expect("can join")
+}
+
 fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBuf), io::Error> {
     let temp_dir = tempfile::Builder::new()
         .prefix("tabcomplete-tests")
@@ -95,22 +121,9 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
     let profile_path = {
         let root = temp_dir.path();
         println!("root: {root:?}");
-        let exe = find_exe();
-        let output = Command::new(&exe)
-            .arg("init")
-            .output()
-            .expect("failed to execute");
         let mut init_str = profile_prefix_data.join("\n\n");
         init_str.push('\n');
-        init_str.push_str(&String::from_utf8(output.stdout).expect("parsed as utf8"));
-        let re1 = Regex::new(r"tabcomplete complete").unwrap();
-        init_str = re1
-            .replace(&init_str, format!("{exe:?} complete"))
-            .to_string();
-        let re2 = Regex::new(r"tabcomplete nu\-commands").unwrap();
-        init_str = re2
-            .replace(&init_str, format!("{exe:?} nu-commands"))
-            .to_string();
+        init_str.push_str("Invoke-Expression (&tabcomplete init | Out-String)");
         let profile_path = root.join("tabcompleteProfile.ps1");
         fs::File::create(&profile_path)?.write_all(init_str.as_bytes())?;
 
@@ -138,18 +151,6 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
     };
 
     Ok((temp_dir, profile_path))
-}
-
-fn find_exe() -> PathBuf {
-    let root = debug_target_dir();
-
-    let exe_name = if cfg!(windows) {
-        "tabcomplete.exe"
-    } else {
-        "tabcomplete"
-    };
-
-    root.join(exe_name)
 }
 
 fn debug_target_dir() -> PathBuf {

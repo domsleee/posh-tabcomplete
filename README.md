@@ -4,8 +4,10 @@
 
 Blazing fast tab completion for powershell.
 
+![demo](media/demo.gif)
+
 Features:
-* Fast startup and execution using `nu-engine`
+* Fast startup and execution using [nushell/nu-engine](https://crates.io/crates/nu-engine)
 * Extendable using `.nu` files, with built in support for commmon tasks like `git` and `npm run`
 
 By default, [completions.nu](./resource/completions.nu) is used. An alternative `.nu` file can be specified in the `TABCOMPLETE_FILE` environment variable.
@@ -27,6 +29,7 @@ Invoke-Expression (&tabcomplete init | Get-Content)
 [crates.io]: https://crates.io/crates/starship
 
 ## Built in completions
+The completions packaged with the binary in [completions.nu](./resource/completions.nu) are:
 * [git completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/git/git-completions.nu). These are also combined with [git auto generated completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/auto-generate/completions/git.nu)
 * [npm completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/npm/npm-completions.nu)
 * [cargo completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/cargo/cargo-completions.nu)
@@ -39,7 +42,7 @@ Benchmark | Results
 `benchmark/complete` - tab completion (100 branches) | tabcomplete: 71ms, posh-git: 172ms (2.42x faster)
 
 ## Aliases / Function support
-Functions are supported. For example, this would add completion for `gco `, as if it was `git checkout `:
+Functions are supported. For example, the completion of `gco` in the demo is:
 ```pwsh
 function gco() { git checkout $args }
 ```
