@@ -18,12 +18,12 @@ pub fn test_path_is_set() {
         .expect("tests directory")
         .parent()
         .expect("rootdirectory");
-    let expected_bin_path = project_path
-        .join("target")
-        .join("debug")
-        .join("tabcomplete.exe");
+    let expected_bin_path = project_path.join("target").join("debug").join(format!(
+        "tabcomplete{}",
+        if cfg!(windows) { ".exe" } else { "" }
+    ));
 
-    let expected_bin = fs::canonicalize(expected_bin_path).unwrap();
+    let expected_bin = fs::canonicalize(expected_bin_path).expect("bin path should exist");
     assert_eq!(expected_bin, bin_invoked_path);
 }
 

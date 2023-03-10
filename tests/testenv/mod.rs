@@ -101,8 +101,8 @@ fn prepend_to_path_var(path: &PathBuf) -> OsString {
     for existing_path in split_paths {
         new_paths.push(existing_path);
     }
-    let join_paths = env::join_paths(&new_paths).expect("can join");
-    join_paths
+
+    env::join_paths(&new_paths).expect("can join")
 }
 
 fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBuf), io::Error> {
