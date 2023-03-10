@@ -1,3 +1,4 @@
+#![allow(unused_macros)] // FIXME
 use posh_tabcomplete::TABCOMPLETE_FILE;
 use rstest_reuse::*;
 use std::{
