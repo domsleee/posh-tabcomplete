@@ -21,7 +21,7 @@ By default, [completions.nu](./resource/completions.nu) is used. An alternative 
 
 ### Step 2. Setup powershell
 ```pwsh
-Invoke-Expression (&tabcomplete init | Get-Content)
+Invoke-Expression (&tabcomplete init | Out-String)
 ```
 
 [crates.io]: https://crates.io/crates/starship

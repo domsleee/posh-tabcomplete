@@ -113,14 +113,9 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
     let profile_path = {
         let root = temp_dir.path();
         println!("root: {root:?}");
-        let exe = find_exe();
-        let output = Command::new(&exe)
-            .arg("init")
-            .output()
-            .expect("failed to execute");
         let mut init_str = profile_prefix_data.join("\n\n");
         init_str.push('\n');
-        init_str.push_str(&String::from_utf8(output.stdout).expect("parsed as utf8"));
+        init_str.push_str("Invoke-Expression (&tabcomplete init | Out-String)");
         let profile_path = root.join("tabcompleteProfile.ps1");
         fs::File::create(&profile_path)?.write_all(init_str.as_bytes())?;
 
@@ -148,18 +143,6 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
     };
 
     Ok((temp_dir, profile_path))
-}
-
-fn find_exe() -> PathBuf {
-    let root = debug_target_dir();
-
-    let exe_name = if cfg!(windows) {
-        "tabcomplete.exe"
-    } else {
-        "tabcomplete"
-    };
-
-    root.join(exe_name)
 }
 
 fn debug_target_dir() -> PathBuf {
