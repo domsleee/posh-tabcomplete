@@ -12,7 +12,6 @@ use tempfile::TempDir;
 
 const PATH: &str = "PATH";
 
-
 #[template]
 #[rstest]
 #[case("pwsh")]

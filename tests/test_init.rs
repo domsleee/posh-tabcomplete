@@ -5,7 +5,6 @@ use rstest_reuse::{self, *};
 use std::io::BufRead;
 pub use testenv::*;
 
-
 #[apply(shell_to_use)]
 fn test_init(shell: &str) {
     let testenv = TestEnv::new(shell);
