@@ -8,12 +8,6 @@ use rstest_reuse::{self, *};
 mod testenv;
 pub use testenv::*;
 
-#[template]
-#[rstest]
-#[case("pwsh")]
-#[cfg_attr(windows, case("powershell"))]
-pub fn shell_to_use(#[case] shell: &str) {}
-
 #[apply(shell_to_use)]
 fn test_checkout_branches(shell: &str) {
     let testenv = TestEnv::new(shell);
