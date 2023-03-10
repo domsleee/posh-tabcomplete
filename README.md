@@ -1,4 +1,4 @@
-# posh-tabcompletelkllkklm,m,,m,m,,,mm,,m,mm,,,mm,m,,,,m,,,m
+# posh-tabcomplete
 [![Crates.io](https://img.shields.io/crates/v/posh-tabcomplete.svg)](https://crates.io/crates/posh-tabcomplete)
 [![Build Status](https://github.com/domsleee/posh-tabcomplete/actions/workflows/ci.yml/badge.svg)](https://github.com/domsleee/posh-tabcomplete/actions/workflows/ci.yml)
 

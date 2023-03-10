@@ -1,4 +1,5 @@
 use posh_tabcomplete::TABCOMPLETE_FILE;
+use rstest_reuse::*;
 use std::{
     env,
     ffi::OsString,
@@ -10,6 +11,13 @@ use std::{
 use tempfile::TempDir;
 
 const PATH: &str = "PATH";
+
+
+#[template]
+#[rstest]
+#[case("pwsh")]
+#[cfg_attr(windows, case("powershell"))]
+pub fn shell_to_use(#[case] shell: &str) {}
 
 pub struct TestEnv {
     pub shell: String,
