@@ -1,6 +1,6 @@
 [package]
 name = "posh-tabcomplete"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "Blazing fast tab completion for powershell."
@@ -8,6 +8,12 @@ repository = "https://github.com/domsleee/posh-tabcomplete"
 readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/{ version }/{ name }-{ version }-{ target }.{ archive-format }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
 
 [dependencies]
 clap = { version = "4.1.8", features = ["derive"] }
