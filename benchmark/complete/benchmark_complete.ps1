@@ -1,11 +1,16 @@
-$ErrorActionPreference = "Stop"
-if (Test-Path repo) {
-    Remove-Item -r -fo repo
+
+. $PSScriptRoot/../setupErrorHandling.ps1
+$childRepoDir = "$PSScriptRoot/repo"
+if (Test-Path "$childRepoDir") {
+    Remove-Item -r -fo "$childRepoDir"
 }
 
-Write-Output "set up repo"
-mkdir repo
-Set-Location repo
+# ensure posh-git is installed
+$(Get-InstalledModule -Name "posh-git").Version
+
+Write-Output "set up childRepoDir"
+mkdir "$childRepoDir"
+Set-Location "$childRepoDir"
 git init
 Write-Output readme > README.md
 git add .
@@ -14,18 +19,19 @@ git commit -m "init"
     git checkout -b feature/branch$_
 }
 
-Set-Location ..
+Set-Location "$PSScriptRoot"
 hyperfine `
     --warmup 3 `
-    -L script ./CompleteBaseline.ps1,./CompletePoshGit.ps1,./CompleteTabComplete.ps1 `
+    --runs 2 `
+    -L script CompleteBaseline.ps1,CompletePoshGit.ps1,CompleteTabComplete.ps1 `
     "pwsh -NoProfile -File {script}" `
-    --export-markdown complete.md `
-    --export-csv complete.csv
+    --export-markdown $PSScriptRoot/complete.md `
+    --export-csv $PSScriptRoot/complete.csv
 
 . $PSScriptRoot/../util.ps1
-$csv = "complete.csv"
+$csv = "$PSScriptRoot/complete.csv"
 $tabMs = GetMs $csv "CompleteBaseline.ps1" "CompleteTabComplete.ps1";
 $poshMs = GetMs $csv "CompleteBaseline.ps1" "CompletePoshGit.ps1";
 $summary = GetSummary $poshMs $tabMs
-Write-Output $summary >> complete.md
-echo $summary
+Write-Output $summary >> $PSScriptRoot/complete.md
+Write-Output $summary
