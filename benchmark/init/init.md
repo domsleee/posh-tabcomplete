@@ -1,7 +1,7 @@
 | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
 |:---|---:|---:|---:|---:|
-| `pwsh -NoProfile -File ./../profiles/ProfileBaseline.ps1` | 288.8 ± 17.1 | 271.6 | 348.9 | 1.00 |
-| `pwsh -NoProfile -File ./../profiles/ProfilePoshGit.ps1` | 628.9 ± 10.6 | 610.9 | 649.4 | 2.18 ± 0.13 |
-| `pwsh -NoProfile -File ./../profiles/ProfileTabComplete.ps1` | 356.0 ± 6.9 | 344.5 | 368.0 | 1.23 ± 0.08 |
+| `pwsh -NoProfile -File ./../profiles/ProfileBaseline.ps1` | 240.1 ± 7.1 | 233.3 | 263.2 | 1.00 |
+| `pwsh -NoProfile -File ./../profiles/ProfilePoshGit.ps1` | 541.9 ± 16.0 | 525.0 | 583.6 | 2.26 ± 0.09 |
+| `pwsh -NoProfile -File ./../profiles/ProfileTabComplete.ps1` | 306.7 ± 9.4 | 296.9 | 326.3 | 1.28 ± 0.05 |
 
-tabcomplete: 67ms, posh-git: 340ms (5.07x faster)
+tabcomplete: 66ms, posh-git: 301ms (4.56x faster)
