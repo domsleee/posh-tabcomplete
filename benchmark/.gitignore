@@ -1,3 +1,3 @@
 complete/repo
-complete/*.{md,csv}
-init/*.{md,csv}
+complete/*[.csv, .md]
+init/*[.csv, .md]
