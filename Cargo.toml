@@ -43,5 +43,5 @@ path = "src/main.rs"
 [profile.release]
 lto = true
 strip = true
-opt-level = "s"
+opt-level = 3
 codegen-units = 1
