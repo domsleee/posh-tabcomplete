@@ -13,5 +13,5 @@ $csv = "$PSScriptRoot/init.csv"
 $poshMs = GetMs $csv "ProfileBaseline.ps1" "ProfilePoshGit.ps1";
 $tabMs = GetMs $csv "ProfileBaseline.ps1" "ProfileTabComplete.ps1";
 $summary = GetSummary $poshMs $tabMs
-Write-Output $summary >> "$PSScriptRoot/init.md"
+Write-Output "`n$summary" >> "$PSScriptRoot/init.md"
 Write-Output $summary

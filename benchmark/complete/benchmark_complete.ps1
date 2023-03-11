@@ -22,7 +22,7 @@ git commit -m "init"
 Set-Location "$PSScriptRoot"
 hyperfine `
     --warmup 3 `
-    --runs 2 `
+    --runs 25 `
     -L script CompleteBaseline.ps1,CompletePoshGit.ps1,CompleteTabComplete.ps1 `
     "pwsh -NoProfile -File {script}" `
     --export-markdown $PSScriptRoot/complete.md `
@@ -33,5 +33,5 @@ $csv = "$PSScriptRoot/complete.csv"
 $tabMs = GetMs $csv "CompleteBaseline.ps1" "CompleteTabComplete.ps1";
 $poshMs = GetMs $csv "CompleteBaseline.ps1" "CompletePoshGit.ps1";
 $summary = GetSummary $poshMs $tabMs
-Write-Output $summary >> $PSScriptRoot/complete.md
+Write-Output "`n$summary" >> $PSScriptRoot/complete.md
 Write-Output $summary

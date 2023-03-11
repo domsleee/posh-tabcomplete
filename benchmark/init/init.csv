@@ -1,4 +1,4 @@
 command,mean,stddev,median,user,system,min,max,parameter_profile
-pwsh -NoProfile -File ./../profiles/ProfileBaseline.ps1,0.24004284200000003,0.009126671520296982,0.240589466,0.22718750000000015,0.1165625,0.228697066,0.270925566,./../profiles/ProfileBaseline.ps1
-pwsh -NoProfile -File ./../profiles/ProfilePoshGit.ps1,0.53085235,0.014271793439324066,0.527594066,0.48218750000000016,0.20218749999999994,0.513533966,0.566462766,./../profiles/ProfilePoshGit.ps1
-pwsh -NoProfile -File ./../profiles/ProfileTabComplete.ps1,0.30417173399999997,0.008555116662009938,0.30101246600000003,0.26906250000000015,0.1565625,0.292540966,0.32660026600000003,./../profiles/ProfileTabComplete.ps1
+pwsh -NoProfile -File ./../profiles/ProfileBaseline.ps1,0.23717351600000003,0.005547363058375874,0.236693084,0.233125,0.1221875,0.229120684,0.251609684,./../profiles/ProfileBaseline.ps1
+pwsh -NoProfile -File ./../profiles/ProfilePoshGit.ps1,0.527875396,0.01215887851333063,0.525359684,0.471875,0.21156249999999993,0.5158258840000001,0.5639655840000001,./../profiles/ProfilePoshGit.ps1
+pwsh -NoProfile -File ./../profiles/ProfileTabComplete.ps1,0.30273611999999994,0.008636841701874202,0.303008384,0.281875,0.1428125,0.289186584,0.320835284,./../profiles/ProfileTabComplete.ps1
