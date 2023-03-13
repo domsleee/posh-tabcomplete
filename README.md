@@ -14,7 +14,7 @@ By default, [completions.nu](./resource/completions.nu) is used. An alternative 
 
 ## Installation
 
-### Step 1. Install
+### Step 1. Install binary
 
 | Repository      | Instructions                             |
 | --------------- | ---------------------------------------  |

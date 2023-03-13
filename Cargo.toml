@@ -39,3 +39,9 @@ rstest_reuse = "0.5.0"
 [[bin]]
 name = "tabcomplete"
 path = "src/main.rs"
+
+[profile.release]
+lto = true
+strip = true
+opt-level = "s"
+codegen-units = 1
