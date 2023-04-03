@@ -3,10 +3,10 @@ use std::io::BufRead;
 use itertools::Itertools;
 use rstest::rstest;
 use rstest_reuse::{self, *};
-use spectral::assert_that;
+use speculoos::assert_that;
 
-extern crate spectral;
-use crate::spectral::prelude::ContainingIntoIterAssertions;
+extern crate speculoos;
+use crate::speculoos::prelude::ContainingIntoIterAssertions;
 
 mod testenv;
 pub use testenv::*;

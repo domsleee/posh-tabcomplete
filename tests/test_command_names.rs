@@ -7,8 +7,8 @@ use rstest_reuse::{self, *};
 mod testenv;
 pub use testenv::*;
 
-use spectral::assert_that;
-use spectral::prelude::ContainingIntoIterAssertions;
+use speculoos::assert_that;
+use speculoos::prelude::ContainingIntoIterAssertions;
 
 #[apply(shell_to_use)]
 fn test_command_names(shell: &str) {
