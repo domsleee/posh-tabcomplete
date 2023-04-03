@@ -6,7 +6,7 @@ use std::{
     ffi::OsString,
     fs,
     io::{self, Write},
-    path::{PathBuf, Path},
+    path::{Path, PathBuf},
     process::{Command, Output},
 };
 use tempfile::TempDir;

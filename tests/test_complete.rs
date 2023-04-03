@@ -1,9 +1,9 @@
 use std::io::BufRead;
 
-use spectral::{assert_that};
 use itertools::Itertools;
 use rstest::rstest;
 use rstest_reuse::{self, *};
+use spectral::assert_that;
 
 extern crate spectral;
 use crate::spectral::prelude::ContainingIntoIterAssertions;
