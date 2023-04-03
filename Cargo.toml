@@ -31,10 +31,9 @@ regex = "1.7.1"
 diff = "0.1"
 tempfile = "3.3"
 filetime = "0.2"
-test-case = "2.2"
-assertor = "0.0.1"
-rstest = "0.16.0"
+rstest = "0.17.0"
 rstest_reuse = "0.5.0"
+spectral = "0.6.0"
 
 [[bin]]
 name = "tabcomplete"

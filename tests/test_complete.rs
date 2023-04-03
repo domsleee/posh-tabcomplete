@@ -1,9 +1,12 @@
 use std::io::BufRead;
 
-use assertor::{assert_that, VecAssertion};
+use spectral::{assert_that};
 use itertools::Itertools;
 use rstest::rstest;
 use rstest_reuse::{self, *};
+
+extern crate spectral;
+use crate::spectral::prelude::ContainingIntoIterAssertions;
 
 mod testenv;
 pub use testenv::*;

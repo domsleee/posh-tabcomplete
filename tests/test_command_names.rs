@@ -1,12 +1,14 @@
 use std::io::BufRead;
 
-use assertor::{assert_that, VecAssertion};
 use itertools::Itertools;
 use rstest::rstest;
 use rstest_reuse::{self, *};
 
 mod testenv;
 pub use testenv::*;
+
+use spectral::assert_that;
+use spectral::prelude::ContainingIntoIterAssertions;
 
 #[apply(shell_to_use)]
 fn test_command_names(shell: &str) {
