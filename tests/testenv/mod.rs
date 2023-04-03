@@ -6,7 +6,7 @@ use std::{
     ffi::OsString,
     fs,
     io::{self, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
     process::{Command, Output},
 };
 use tempfile::TempDir;
@@ -102,10 +102,10 @@ impl TestEnv {
     }
 }
 
-fn prepend_to_path_var(path: &PathBuf) -> OsString {
+fn prepend_to_path_var(path: &Path) -> OsString {
     let current_path = env::var_os(PATH).expect("PATH must be defined");
     let split_paths = env::split_paths(&current_path);
-    let mut new_paths = vec![path.clone()];
+    let mut new_paths = vec![path.to_path_buf()];
     for existing_path in split_paths {
         new_paths.push(existing_path);
     }
