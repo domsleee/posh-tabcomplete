@@ -2,7 +2,7 @@
 [![Crates.io](https://img.shields.io/crates/v/posh-tabcomplete.svg)](https://crates.io/crates/posh-tabcomplete)
 [![Build Status](https://github.com/domsleee/posh-tabcomplete/actions/workflows/ci.yml/badge.svg)](https://github.com/domsleee/posh-tabcomplete/actions/workflows/ci.yml)
 
-Blazing fast tab completion for powershell.
+Blazing fast tab completion for powershell and pwsh.
 
 ![demo](media/demo.gif)
 
@@ -16,12 +16,16 @@ By default, [completions.nu](./resource/completions.nu) is used. An alternative 
 
 ### Step 1. Install binary
 
+There are binaries available in [releases](https://github.com/domsleee/posh-tabcomplete/releases) or with one of these commands:
+
 | Repository      | Instructions                             |
 | --------------- | ---------------------------------------  |
 | **[crates.io]** | `cargo install posh-tabcomplete --locked`|
 
 
 ### Step 2. Setup powershell
+
+Add this line to your profile, you can edit this by typing `code $PROFILE` in powershell:
 ```pwsh
 Invoke-Expression (&tabcomplete init | Out-String)
 ```
