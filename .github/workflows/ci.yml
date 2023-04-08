@@ -49,6 +49,6 @@ jobs:
       - name: Tests
         run: cargo test
 
-    if: matrix.os == 'ubuntu-latest'
+    if: matrix.platform == 'ubuntu-latest'
     container:
       image: microsoft/wsl
