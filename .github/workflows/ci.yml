@@ -34,7 +34,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        platform: [windows-latest, macos-latest, ubuntu-22.04, ubuntu-latest]
+        platform:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+          - ${{ env.WSL_HOST_OS }} # Use WSL if available, fallback to Linux if not
         style: [default]
         rust:
           - stable
@@ -48,7 +52,3 @@ jobs:
 
       - name: Tests
         run: cargo test
-
-    if: matrix.platform == 'ubuntu-latest'
-    container:
-      image: microsoft/wsl
