@@ -19,6 +19,7 @@ mod nu_util;
 use std::str;
 
 fn main() -> Result<(), std::io::Error> {
+    env_logger::init();
     run_with_args(&RootArgs::parse())
 }
 
