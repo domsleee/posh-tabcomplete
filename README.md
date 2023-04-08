@@ -9,6 +9,7 @@ Blazing fast tab completion for powershell and pwsh.
 Features:
 * Fast startup and execution using [nushell/nu-engine](https://crates.io/crates/nu-engine)
 * Extendable using `.nu` files, with built in support for commmon tasks like `git` and `npm run`
+* Supports all platforms. Tested on windows, WSL, mac and linux
 
 By default, [completions.nu](./resource/completions.nu) is used. An alternative `.nu` file can be specified in the `TABCOMPLETE_FILE` environment variable.
 
