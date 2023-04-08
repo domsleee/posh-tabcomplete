@@ -2,6 +2,7 @@
 pwsh -Command {
     param($scriptRoot)
     . $scriptRoot/setupErrorHandling.ps1
+    . $scriptRoot/ensurePoshGitInstalled.ps1
     cargo build --release
     $binaryPath = $(Resolve-Path "$scriptRoot/../target/release")
     Write-Output "binary path $binaryPath"
@@ -26,4 +27,5 @@ pwsh -Command {
     Write-Output "## Complete`n" >> $allBenchmarksFile
     pwsh -File "$scriptRoot/complete/benchmark_complete.ps1"
     Get-Content $scriptRoot/complete/complete.md >> $allBenchmarksFile
+    Get-Content $scriptRoot/complete/complete.md
 } -args $PSScriptRoot
