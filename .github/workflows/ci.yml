@@ -34,11 +34,10 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        platform: [windows-latest, macos-latest, ubuntu-22.04]
+        platform: [windows-latest, macos-latest, ubuntu-22.04, ubuntu-latest]
         style: [default]
         rust:
           - stable
-
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -49,3 +48,7 @@ jobs:
 
       - name: Tests
         run: cargo test
+
+    if: matrix.os == 'ubuntu-latest'
+    container:
+      image: microsoft/wsl
