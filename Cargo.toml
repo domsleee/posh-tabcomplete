@@ -26,6 +26,7 @@ nu-protocol = "0.77.1"
 reedline = "0.17.0"
 nu-engine = "0.77.1"
 regex = "1.7.1"
+env_logger = "0.10.0"
 
 [dev-dependencies]
 diff = "0.1"

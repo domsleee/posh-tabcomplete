@@ -24,7 +24,7 @@ $null = New-Module tabcomplete {
         if ($EnableProxyFunctionExpansion) {
             $textToComplete = Expand-GitProxyFunctionForComplete($textToComplete)
         }
-        &tabcomplete complete "$textToComplete"
+        $null | &tabcomplete complete "$textToComplete"
     }
 
     # Below is for alias expansion
