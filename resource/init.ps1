@@ -1,11 +1,11 @@
 #!/usr/bin/env pwsh
 $ErrorActionPreference = "stop"
-$null = New-Module tabcomplete {
+$null = New-Module posh-tabcomplete {
     function Get-JoinPattern($executables) {
         "($($executables -join '|'))"
     }
     $EnableProxyFunctionExpansion = $true
-    $knownExecutables = @(&tabcomplete nu-commands)#"git", "burrito"
+    $knownExecutables = @(&posh-tabcomplete nu-commands)#"git", "burrito"
     $GitProxyFunctionRegex = "(^|[;`n])(\s*)(?<cmd>$(Get-JoinPattern $knownExecutables))(?<params>(([^\S\r\n]|[^\S\r\n]``\r?\n)+\S+)*)(([^\S\r\n]|[^\S\r\n]``\r?\n)+\`$args)(\s|``\r?\n)*($|[|;`n])"
 
     function Main {
@@ -24,7 +24,7 @@ $null = New-Module tabcomplete {
         if ($EnableProxyFunctionExpansion) {
             $textToComplete = Expand-GitProxyFunctionForComplete($textToComplete)
         }
-        $null | &tabcomplete complete "$textToComplete"
+        $null | &posh-tabcomplete complete "$textToComplete"
     }
 
     # Below is for alias expansion

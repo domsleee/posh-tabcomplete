@@ -6,7 +6,7 @@ pwsh -Command {
     $binaryPath = $(Resolve-Path "$scriptRoot/../target/release")
     Write-Output "binary path $binaryPath"
     $env:PATH = "$binaryPath;$env:PATH"
-    $actualBinaryDirectory = $(Split-Path $(Get-Command tabcomplete).Path)
+    $actualBinaryDirectory = $(Split-Path $(Get-Command posh-tabcomplete).Path)
     if ($actualBinaryDirectory -ne $binaryPath) {
         Write-Error "Mismatch, expected $actualBinaryDirectory, got $binaryPath"
         exit 1
@@ -14,7 +14,7 @@ pwsh -Command {
     $allBenchmarksFile = "$scriptRoot/all.md"
     Write-Output "# All results`n" > $allBenchmarksFile
 
-    $fileSize = $(Get-Item $(Get-Command tabcomplete).Path).Length
+    $fileSize = $(Get-Item $(Get-Command posh-tabcomplete).Path).Length
     Write-Output "file size: $fileSize"
     Write-Output "file size: $fileSize" >> $allBenchmarksFile
     

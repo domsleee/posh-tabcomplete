@@ -123,7 +123,7 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
         println!("root: {root:?}");
         let mut init_str = profile_prefix_data.join("\n\n");
         init_str.push('\n');
-        init_str.push_str("Invoke-Expression (&tabcomplete init | Out-String)");
+        init_str.push_str("Invoke-Expression (&posh-tabcomplete init | Out-String)");
         let profile_path = root.join("tabcompleteProfile.ps1");
         fs::File::create(&profile_path)?.write_all(init_str.as_bytes())?;
 
@@ -154,7 +154,7 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
 }
 
 fn debug_target_dir() -> PathBuf {
-    // Tests exe is in target/debug/deps, tabcomplete.exe is in `target`
+    // Tests exe is in target/debug/deps, posh-tabcomplete.exe is in `target`
     let target_dir = env::current_exe()
         .expect("tests executable")
         .parent()
