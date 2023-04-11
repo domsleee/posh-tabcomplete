@@ -74,15 +74,15 @@ jobs:
         run: >
           tar -cv
           README.md
-          -C target/${{ matrix.target }}/release/ tabcomplete
+          -C target/${{ matrix.target }}/release/ posh-tabcomplete
           | gzip --best
-          > 'tabcomplete-${{ steps.get_version.outputs.value }}-${{ matrix.target }}.tar.gz'
+          > 'posh-tabcomplete-${{ steps.get_version.outputs.value }}-${{ matrix.target }}.tar.gz'
       - name: Package (Windows)
         if: runner.os == 'Windows'
         run: >
-          7z a 'tabcomplete-${{ steps.get_version.outputs.value }}-${{ matrix.target }}.zip'
+          7z a 'posh-tabcomplete-${{ steps.get_version.outputs.value }}-${{ matrix.target }}.zip'
           README.md
-          ./target/${{ matrix.target }}/release/tabcomplete.exe
+          ./target/${{ matrix.target }}/release/posh-tabcomplete.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2

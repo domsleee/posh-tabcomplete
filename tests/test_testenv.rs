@@ -7,7 +7,9 @@ pub use testenv::*;
 #[test]
 pub fn test_path_is_set() {
     let testenv = TestEnv::new("pwsh");
-    let res = testenv.run_with_profile("(gcm tabcomplete).Path").unwrap();
+    let res = testenv
+        .run_with_profile("(gcm posh-tabcomplete).Path")
+        .unwrap();
     let lines = res.stdout.lines().map(|x| x.unwrap()).collect_vec();
 
     let bin_invoked_path = fs::canonicalize(&lines[0]).expect("invoked path");
@@ -19,7 +21,7 @@ pub fn test_path_is_set() {
         .parent()
         .expect("rootdirectory");
     let expected_bin_path = project_path.join("target").join("debug").join(format!(
-        "tabcomplete{}",
+        "posh-tabcomplete{}",
         if cfg!(windows) { ".exe" } else { "" }
     ));
 

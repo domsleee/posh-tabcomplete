@@ -28,7 +28,7 @@ There are binaries available in [releases](https://github.com/domsleee/posh-tabc
 
 Add this line to your profile, you can edit this by typing `code $PROFILE` in powershell:
 ```pwsh
-Invoke-Expression (&tabcomplete init | Out-String)
+Invoke-Expression (&posh-tabcomplete init | Out-String)
 ```
 
 [crates.io]: https://crates.io/crates/starship
@@ -44,8 +44,8 @@ To run these, run `./benchmark/benchmark_all.ps1`
 
 Benchmark | Results
 ----------|-----------
-`benchmark/init` - startup time | tabcomplete: 102ms, posh-git: 432ms (4.24x faster)
-`benchmark/complete` - tab completion (100 branches) | tabcomplete: 71ms, posh-git: 172ms (2.42x faster)
+`benchmark/init` - startup time | posh-tabcomplete: 102ms, posh-git: 432ms (4.24x faster)
+`benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 71ms, posh-git: 172ms (2.42x faster)
 
 ## Aliases / Function support
 Functions are supported. For example, the completion of `gco` in the demo is:
