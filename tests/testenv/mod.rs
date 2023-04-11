@@ -27,11 +27,6 @@ pub struct TestEnv {
 
 impl TestEnv {
     pub fn new(shell: &str) -> TestEnv {
-        assert!(
-            env::var(TABCOMPLETE_FILE).is_err(),
-            "if {TABCOMPLETE_FILE} is set, these tests won't work"
-        );
-
         let profile_prefix_data = vec![
             include_str!("./aliases.ps1"),
             include_str!("./additionalFns.ps1"),
@@ -89,6 +84,7 @@ impl TestEnv {
         let output = Command::new(&self.shell)
             .arg("-NoProfile")
             .arg("-File")
+            .env_remove(TABCOMPLETE_FILE)
             .arg(file_path.to_str().unwrap())
             .env(PATH, paths_var)
             .current_dir(root)
