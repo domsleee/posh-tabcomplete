@@ -2,13 +2,15 @@
 pwsh -Command {
     param($scriptRoot)
     . $scriptRoot/setupErrorHandling.ps1
+    . $scriptRoot/ensureBenchmarkDepsInstalled.ps1
     cargo build --release
     $binaryPath = $(Resolve-Path "$scriptRoot/../target/release")
     Write-Output "binary path $binaryPath"
-    $env:PATH = "$binaryPath;$env:PATH"
+    $sep = if ($env:OS -eq "Windows_NT") { ';' } else { ':' }
+    $env:PATH = "$binaryPath$sep$env:PATH"
     $actualBinaryDirectory = $(Split-Path $(Get-Command tabcomplete).Path)
     if ($actualBinaryDirectory -ne $binaryPath) {
-        Write-Error "Mismatch, expected $actualBinaryDirectory, got $binaryPath"
+        Write-Error "Mismatch, expected $binaryPath, got $actualBinaryDirectory"
         exit 1
     }
     $allBenchmarksFile = "$scriptRoot/all.md"
@@ -26,4 +28,7 @@ pwsh -Command {
     Write-Output "## Complete`n" >> $allBenchmarksFile
     pwsh -File "$scriptRoot/complete/benchmark_complete.ps1"
     Get-Content $scriptRoot/complete/complete.md >> $allBenchmarksFile
+
+    Write-Output ""
+    Get-Content $allBenchmarksFile
 } -args $PSScriptRoot

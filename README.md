@@ -40,6 +40,7 @@ The completions packaged with the binary in [completions.nu](./resource/completi
 * [cargo completions](https://github.com/nushell/nu_scripts/blob/main/custom-completions/cargo/cargo-completions.nu)
 
 ## Benchmarks
+To run these, run `./benchmark/benchmark_all.ps1`
 
 Benchmark | Results
 ----------|-----------
