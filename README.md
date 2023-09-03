@@ -6,6 +6,12 @@ Blazing fast tab completion for powershell and pwsh.
 
 ![demo](media/demo.gif)
 
+This video is using the `MenuComplete` binding in  `code $PROFILE`:
+
+```powershell
+Set-PSReadLineKeyHandler -Key Tab MenuComplete
+```
+
 Features:
 * Fast startup and execution using [nushell/nu-engine](https://crates.io/crates/nu-engine)
 * Extendable using `.nu` files, with built in support for commmon tasks like `git` and `npm run`
@@ -17,11 +23,11 @@ By default, [completions.nu](./resource/completions.nu) is used. An alternative 
 
 ### Step 1. Install binary
 
-There are binaries available in [releases](https://github.com/domsleee/posh-tabcomplete/releases) or with one of these commands:
+There are binaries available in [releases](https://github.com/domsleee/posh-tabcomplete/releases), or with one of these commands:
 
-| Repository      | Instructions                             |
-| --------------- | ---------------------------------------  |
-| **[crates.io]** | `cargo install posh-tabcomplete --locked`|
+| Repository      | Instructions                              |
+| --------------- | ----------------------------------------- |
+| **[crates.io]** | `cargo install posh-tabcomplete --locked` |
 
 
 ### Step 2. Setup powershell
@@ -31,7 +37,7 @@ Add this line to your profile, you can edit this by typing `code $PROFILE` in po
 Invoke-Expression (&posh-tabcomplete init | Out-String)
 ```
 
-[crates.io]: https://crates.io/crates/starship
+[crates.io]: https://crates.io/crates/posh-tabcomplete
 
 ## Built in completions
 The completions packaged with the binary in [completions.nu](./resource/completions.nu) are:
