@@ -60,3 +60,19 @@ function gco() { git checkout $args }
 ```
 
 There is no support for alias completions at this time.
+
+## Full list of completions
+
+See [completions.nu](./resource/completions.nu):
+
+* `git`
+  * `branch`
+  * `checkout`
+  * `cherry-pick`
+  * `fetch`
+  * `merge`
+  * `push`
+  * `rebase`
+  * `switch`
+* `npm`
+  * `run`
