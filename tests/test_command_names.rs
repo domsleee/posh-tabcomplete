@@ -12,11 +12,7 @@ use speculoos::prelude::ContainingIntoIterAssertions;
 
 #[apply(shell_to_use)]
 fn test_command_names(shell: &str) {
-    let testenv = TestEnv::new(shell);
-    let res = testenv
-        .run_with_profile("Get-CommandNamesUsingRegex")
-        .unwrap();
-    let lines = res.stdout.lines().map(|x| x.unwrap()).collect_vec();
+    let lines = util::run_command(shell, "Get-CommandNamesUsingRegex");
     println!("{lines:?}");
     assert_that!(lines).contains("git".to_string());
 }

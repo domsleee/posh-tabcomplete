@@ -6,6 +6,12 @@ Blazing fast tab completion for powershell and pwsh.
 
 ![demo](media/demo.gif)
 
+This video is using the `MenuComplete` binding in  `code $PROFILE`:
+
+```powershell
+Set-PSReadLineKeyHandler -Key Tab MenuComplete
+```
+
 Features:
 * Fast startup and execution using [nushell/nu-engine](https://crates.io/crates/nu-engine)
 * Extendable using `.nu` files, with built in support for commmon tasks like `git` and `npm run`
@@ -17,11 +23,11 @@ By default, [completions.nu](./resource/completions.nu) is used. An alternative 
 
 ### Step 1. Install binary
 
-There are binaries available in [releases](https://github.com/domsleee/posh-tabcomplete/releases) or with one of these commands:
+There are binaries available in [releases](https://github.com/domsleee/posh-tabcomplete/releases), or with one of these commands:
 
-| Repository      | Instructions                             |
-| --------------- | ---------------------------------------  |
-| **[crates.io]** | `cargo install posh-tabcomplete --locked`|
+| Repository      | Instructions                              |
+| --------------- | ----------------------------------------- |
+| **[crates.io]** | `cargo install posh-tabcomplete --locked` |
 
 
 ### Step 2. Setup powershell
@@ -31,7 +37,7 @@ Add this line to your profile, you can edit this by typing `code $PROFILE` in po
 Invoke-Expression (&posh-tabcomplete init | Out-String)
 ```
 
-[crates.io]: https://crates.io/crates/starship
+[crates.io]: https://crates.io/crates/posh-tabcomplete
 
 ## Built in completions
 The completions packaged with the binary in [completions.nu](./resource/completions.nu) are:
@@ -42,10 +48,10 @@ The completions packaged with the binary in [completions.nu](./resource/completi
 ## Benchmarks
 To run these, run `./benchmark/benchmark_all.ps1`
 
-Benchmark | Results
-----------|-----------
-`benchmark/init` - startup time | posh-tabcomplete: 102ms, posh-git: 432ms (4.24x faster)
-`benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 71ms, posh-git: 172ms (2.42x faster)
+| Benchmark                                            | Results                                                 |
+| ---------------------------------------------------- | ------------------------------------------------------- |
+| `benchmark/init` - startup time                      | posh-tabcomplete: 102ms, posh-git: 432ms (4.24x faster) |
+| `benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 71ms, posh-git: 172ms (2.42x faster)  |
 
 ## Aliases / Function support
 Functions are supported. For example, the completion of `gco` in the demo is:
@@ -54,3 +60,19 @@ function gco() { git checkout $args }
 ```
 
 There is no support for alias completions at this time.
+
+## Full list of completions
+
+See [completions.nu](./resource/completions.nu):
+
+* `git`
+  * `branch`
+  * `checkout`
+  * `cherry-pick`
+  * `fetch`
+  * `merge`
+  * `push`
+  * `rebase`
+  * `switch`
+* `npm`
+  * `run`

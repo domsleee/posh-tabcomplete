@@ -16,6 +16,10 @@ def "nu-complete git remotes" [] {
   ^git remote | lines | each { |line| $line | str trim }
 }
 
+def "nu-complete git remote or branch" [] {
+  (nu-complete git remotes) ++ (nu-complete git branches)
+}
+
 def "nu-complete git log" [] {
   ^git log --pretty=%h | lines | each { |line| $line | str trim }
 }
@@ -202,6 +206,81 @@ extern "git branch" [
 	--default(-d)				# Use default branch of the submodule
 ]
 
+# Join two or more development histories together
+extern "git merge" [
+	...refs: string@"nu-complete git switchable branches"    # branch to merge with
+	--commit					# Autocommit the merge
+	--no-commit					# Don't autocommit the merge
+	--edit(-e)					# Edit auto-generated merge message
+	--no-edit					# Don't edit auto-generated merge message
+	--ff						# Don't generate a merge commit if merge is fast-forward
+	--no-ff						# Generate a merge commit even if merge is fast-forward
+	--ff-only					# Refuse to merge unless fast-forward possible
+	--gpg-sign(-S)				# GPG-sign the merge commit
+	--log						# Populate the log message with one-line descriptions
+	--no-log					# Don't populate the log message with one-line descriptions
+	--signoff					# Add Signed-off-by line at the end of the merge commit message
+	--no-signoff				# Do not add a Signed-off-by line at the end of the merge commit message
+	--stat						# Show diffstat of the merge
+	--no-stat(-n)				# Don't show diffstat of the merge
+	--squash					# Squash changes from other branch as a single commit
+	--no-squash					# Don't squash changes
+	--verify-signatures			# Abort merge if other branch tip commit is not signed with a valid key
+	--no-verify-signatures		# Do not abort merge if other branch tip commit is not signed with a valid key
+	--quiet(-q)					# Be quiet
+	--verbose(-v)				# Be verbose
+	--progress					# Force progress status
+	--no-progress				# Force no progress status
+	--allow-unrelated-histories	# Allow merging even when branches do not share a common history
+	--rerere-autoupdate			# If possible, use previous conflict resolutions
+	--no-rerere-autoupdate		# Do not use previous conflict resolutions
+	--abort						# Abort the current conflict resolution process
+	--continue					# Conclude current conflict resolution process
+	--all(-a)					# Output all merge bases for the commits, instead of just one
+	--octopus					# Compute the best common ancestors of all supplied commits
+	--independent				# Print a minimal subset of the supplied commits with the same ancestors
+	--is-ancestor				# Check if the first commit is an ancestor of the second commit
+	--fork-point				# Find the point at which a branch forked from another branch ref
+	--tool-help					# Print a list of merge tools that may be used with `--tool`
+	--no-prompt(-y)				# Do not prompt before launching a diff tool
+	--prompt					# Prompt before each invocation of the merge resolution program
+	--verbose(-v)				# Be more verbose
+	--quiet(-q)					# Operate quietly
+	--commit					# Finalize git notes merge
+	--abort						# Abort git notes merge
+]
+
+
+# Forward-port local commits to the updated upstream head
+extern "git rebase" [
+	remoteOrBranch?: string@"nu-complete git remote or branch",  # the name of the remote / branch
+	...refs: string@"nu-complete git branches"      # the branch / refspec
+	--continue										# Restart the rebasing process
+	--abort											# Abort the rebase operation
+	--edit-todo							# Edit the todo list
+	--keep-empty						# Keep the commits that don't change anything
+	--skip								# Restart the rebasing process by skipping the current patch
+	--merge(-m)							# Use merging strategies to rebase
+	--quiet(-q)							# Be quiet
+	--verbose(-v)						# Be verbose
+	--stat								# Show diffstat of the rebase
+	--no-stat(-n)						# Don't show diffstat of the rebase
+	--verify							# Allow the pre-rebase hook to run
+	--no-verify							# Don't allow the pre-rebase hook to run
+	--force-rebase(-f)					# Force the rebase
+	--committer-date-is-author-date		# Use the author date as the committer date
+	--ignore-date						# Use the committer date as the author date
+	--interactive(-i)					# Interactive mode
+	--preserve-merges(-p)				# Try to recreate merges
+	--rebase-merges(-r)					# Preserve branch structure
+	--root								# Rebase all reachable commits
+	--autosquash						# Automatic squashing
+	--no-autosquash						# No automatic squashing
+	--autostash							# Before starting rebase, stash local changes, and apply stash when done
+	--no-autostash						# Do not stash local changes before starting rebase
+	--no-ff								# No fast-forward
+]
+
 ### FROM AUTOCOMPLETIONS https://github.com/nushell/nu_scripts/tree/main/custom-completions/auto-generate
 ### Please fix these if they are wrong
 
@@ -217,11 +296,11 @@ extern "git filter-branch" [
 	--parent-filter					# This is the filter for rewriting the commit
 	--msg-filter					# This is the filter for rewriting the commit messages
 	--commit-filter					# This is the filter for performing the commit
-	--tag-name-filter					# This is the filter for rewriting tag names
-	--subdirectory-filter					# Only look at the history which touches the given subdirectory
+	--tag-name-filter				# This is the filter for rewriting tag names
+	--subdirectory-filter			# Only look at the history which touches the given subdirectory
 	--prune-empty					# Ignore empty commits generated by filters
-	--original					# Use this option to set the namespace where the original commits will be stored
-	--force(-f)					# Filter even with refs in refs/original or existing temp directory
+	--original						# Use this option to set the namespace where the original commits will be stored
+	--force(-f)						# Filter even with refs in refs/original or existing temp directory
 	...args
 ]
 # Manage set of tracked repositories
@@ -987,49 +1066,6 @@ extern "git unregister" [
 
 	...args
 ]
-# Join two or more development histories together
-extern "git merge" [
-	--commit					# Autocommit the merge
-	--no-commit					# Don't autocommit the merge
-	--edit(-e)					# Edit auto-generated merge message
-	--no-edit					# Don't edit auto-generated merge message
-	--ff					# Don't generate a merge commit if merge is fast-forward
-	--no-ff					# Generate a merge commit even if merge is fast-forward
-	--ff-only					# Refuse to merge unless fast-forward possible
-	--gpg-sign(-S)					# GPG-sign the merge commit
-	--log					# Populate the log message with one-line descriptions
-	--no-log					# Don't populate the log message with one-line descriptions
-	--signoff					# Add Signed-off-by line at the end of the merge commit message
-	--no-signoff					# Do not add a Signed-off-by line at the end of the merge commit message
-	--stat					# Show diffstat of the merge
-	--no-stat(-n)					# Don't show diffstat of the merge
-	--squash					# Squash changes from other branch as a single commit
-	--no-squash					# Don't squash changes
-	--verify-signatures					# Abort merge if other branch tip commit is not signed with a valid key
-	--no-verify-signatures					# Do not abort merge if other branch tip commit is not signed with a valid key
-	--quiet(-q)					# Be quiet
-	--verbose(-v)					# Be verbose
-	--progress					# Force progress status
-	--no-progress					# Force no progress status
-	--allow-unrelated-histories					# Allow merging even when branches do not share a common history
-	--rerere-autoupdate					# If possible, use previous conflict resolutions
-	--no-rerere-autoupdate					# Do not use previous conflict resolutions
-	--abort					# Abort the current conflict resolution process
-	--continue					# Conclude current conflict resolution process
-	--all(-a)					# Output all merge bases for the commits, instead of just one
-	--octopus					# Compute the best common ancestors of all supplied commits
-	--independent					# Print a minimal subset of the supplied commits with the same ancestors
-	--is-ancestor					# Check if the first commit is an ancestor of the second commit
-	--fork-point					# Find the point at which a branch forked from another branch ref
-	--tool-help					# Print a list of merge tools that may be used with `--tool`
-	--no-prompt(-y)					# Do not prompt before launching a diff tool
-	--prompt					# Prompt before each invocation of the merge resolution program
-	--verbose(-v)					# Be more verbose
-	--quiet(-q)					# Operate quietly
-	--commit					# Finalize git notes merge
-	--abort					# Abort git notes merge
-	...args
-]
 # Find as good common ancestors as possible for a merge
 extern "git merge-base" [
 	--all(-a)					# Output all merge bases for the commits, instead of just one
@@ -1186,34 +1222,6 @@ extern "git range-diff" [
 	--anchored					# Generate a diff using the "anchored diff" algorithm
 	--creation-factor					# Percentage by which creation is weighted
 	--no-dual-color					# Use simple diff colors
-	...args
-]
-# Forward-port local commits to the updated upstream head
-extern "git rebase" [
-	--continue					# Restart the rebasing process
-	--abort					# Abort the rebase operation
-	--edit-todo					# Edit the todo list
-	--keep-empty					# Keep the commits that don't change anything
-	--skip					# Restart the rebasing process by skipping the current patch
-	--merge(-m)					# Use merging strategies to rebase
-	--quiet(-q)					# Be quiet
-	--verbose(-v)					# Be verbose
-	--stat					# Show diffstat of the rebase
-	--no-stat(-n)					# Don't show diffstat of the rebase
-	--verify					# Allow the pre-rebase hook to run
-	--no-verify					# Don't allow the pre-rebase hook to run
-	--force-rebase(-f)					# Force the rebase
-	--committer-date-is-author-date					# Use the author date as the committer date
-	--ignore-date					# Use the committer date as the author date
-	--interactive(-i)					# Interactive mode
-	--preserve-merges(-p)					# Try to recreate merges
-	--rebase-merges(-r)					# Preserve branch structure
-	--root					# Rebase all reachable commits
-	--autosquash					# Automatic squashing
-	--no-autosquash					# No automatic squashing
-	--autostash					# Before starting rebase, stash local changes, and apply stash when done
-	--no-autostash					# Do not stash local changes before starting rebase
-	--no-ff					# No fast-forward
 	...args
 ]
 # Preserve branch structure
@@ -1503,9 +1511,6 @@ extern "git help" [
 ]
 
 # https://github.com/nushell/nu_scripts/blob/main/custom-completions/npm/npm-completions.nu
-export extern "npm" [
-  command?: string@"nu-complete npm"
-]
 def "nu-complete npm" [] {
   ^npm -l
   |lines
@@ -1515,6 +1520,9 @@ def "nu-complete npm" [] {
   |get column4
   |str replace '"' ''
 }
+export extern "npm" [
+  command?: string@"nu-complete npm"
+]
 
 def "nu-complete npm run" [] {
   open ./package.json
@@ -1563,7 +1571,7 @@ def "nu-complete cargo features" [] {
 # `cargo --list` is slow, `open` is faster.
 # TODO: Add caching.
 def "nu-complete cargo subcommands" [] {
-  ^cargo --list | lines | skip 1 | str collect "\n" | from ssv --noheaders | get column1
+  ^cargo --list | lines | skip 1 | str join "\n" | from ssv --noheaders | get column1
 }
 def "nu-complete cargo vcs" [] {
   [

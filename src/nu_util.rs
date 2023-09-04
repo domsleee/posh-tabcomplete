@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use nu_cli::NuCompleter;
 use nu_engine::eval_block;
 use nu_parser::parse;
+use nu_protocol::report_error;
 use nu_protocol::{
     engine::{EngineState, Stack, StateWorkingSet},
     PipelineData, ShellError, Span, Value,
@@ -26,8 +27,11 @@ fn merge_input(
 ) -> Result<(), ShellError> {
     let (block, delta) = {
         let mut working_set = StateWorkingSet::new(engine_state);
-        let (block, err) = parse(&mut working_set, None, input, false, &[]);
-        assert!(err.is_none(), "unexpected error: {err:?}");
+        let block = parse(&mut working_set, None, input, false);
+        if let Some(err) = working_set.parse_errors.first() {
+            report_error(&working_set, err);
+            std::process::exit(1);
+        }
         (block, working_set.render())
     };
 
@@ -53,8 +57,8 @@ fn merge_input(
 
 fn new_engine(pwd: &Path) -> (PathBuf, String, EngineState, Stack) {
     let dir_str: String = pwd.display().to_string();
-    let mut engine_state = nu_command::create_default_context();
-
+    let mut engine_state =
+        nu_command::add_shell_command_context(nu_cmd_lang::create_default_context());
     let mut stack = Stack::new();
     stack.add_env_var(
         "PWD".to_string(),
