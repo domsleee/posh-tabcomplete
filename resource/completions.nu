@@ -16,6 +16,10 @@ def "nu-complete git remotes" [] {
   ^git remote | lines | each { |line| $line | str trim }
 }
 
+def "nu-complete git remote or branch" [] {
+  (nu-complete git remotes) ++ (nu-complete git branches)
+}
+
 def "nu-complete git log" [] {
   ^git log --pretty=%h | lines | each { |line| $line | str trim }
 }
@@ -249,7 +253,7 @@ extern "git merge" [
 
 # Forward-port local commits to the updated upstream head
 extern "git rebase" [
-	remote?: string@"nu-complete git remotes",      # the name of the remote
+	remoteOrBranch?: string@"nu-complete git remote or branch",  # the name of the remote / branch
 	...refs: string@"nu-complete git branches"      # the branch / refspec
 	--continue										# Restart the rebasing process
 	--abort											# Abort the rebase operation

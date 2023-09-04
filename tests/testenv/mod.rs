@@ -10,6 +10,7 @@ use std::{
     process::{Command, Output},
 };
 use tempfile::TempDir;
+pub mod util;
 
 const PATH: &str = "PATH";
 
@@ -142,6 +143,7 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
         run_git(&["config", "user.name", "yourname"]);
         run_git(&["commit", "-m", "test"]);
         run_git(&["checkout", "-b", "testbranch23"]);
+        run_git(&["remote", "add", "origin", "test@test.test"]);
 
         profile_path
     };
