@@ -5,9 +5,6 @@ if (Test-Path "$childRepoDir") {
     Remove-Item -r -fo "$childRepoDir"
 }
 
-# ensure posh-git is installed
-$(Get-InstalledModule -Name "posh-git").Version
-
 Write-Output "set up childRepoDir"
 mkdir "$childRepoDir"
 Set-Location "$childRepoDir"
@@ -22,7 +19,7 @@ git commit -m "init"
 Set-Location "$PSScriptRoot"
 hyperfine `
     --warmup 3 `
-    --runs 25 `
+    --runs 75 `
     -L script CompleteBaseline.ps1,CompletePoshGit.ps1,CompleteTabComplete.ps1 `
     "pwsh -NoProfile -File {script}" `
     --export-markdown $PSScriptRoot/complete.md `

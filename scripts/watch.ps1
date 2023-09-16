@@ -1,0 +1,1 @@
+cargo watch -i ./src/*,./resource/* -s 'cargo install --path . --debug'
