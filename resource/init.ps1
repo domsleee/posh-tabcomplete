@@ -5,8 +5,10 @@ $null = New-Module posh-tabcomplete {
         "($($executables -join '|'))"
     }
     $EnableProxyFunctionExpansion = $true
-    $knownExecutables = @(&posh-tabcomplete nu-commands)#"git", "burrito"
-    $GitProxyFunctionRegex = "(^|[;`n])(\s*)(?<cmd>$(Get-JoinPattern $knownExecutables))(?<params>(([^\S\r\n]|[^\S\r\n]``\r?\n)+\S+)*)(([^\S\r\n]|[^\S\r\n]``\r?\n)+\`$args)(\s|``\r?\n)*($|[|;`n])"
+    $knownExecutables = ::TABCOMPLETE_NU_COMMANDS:: # @("git", "npm", "cargo") # @(&posh-tabcomplete nu-commands)
+    $GitProxyFunctionRegex = '(^|[;`n])(\s*)(?<cmd>' + (Get-JoinPattern $knownExecutables) + ')(?<params>(([^\S\r\n]|[^\S\r\n]`\r?\n)+\S+)*)(([^\S\r\n]|[^\S\r\n]`\r?\n)+\$args)(\s|`\r?\n)*($|[|;`n])'
+    # $GitProxyFunctionRegex = "(^|[;`n])(\s*)(?<cmd>$(Get-JoinPattern $knownExecutables))(?<params>(([^\S\r\n]|[^\S\r\n]``\r?\n)+\S+)*)(([^\S\r\n]|[^\S\r\n]``\r?\n)+\`$args)(\s|``\r?\n)*($|[|;`n])"
+
 
     function Main {
         $cmdNames = Get-CommandNamesUsingRegex

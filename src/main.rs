@@ -26,11 +26,8 @@ fn main() -> Result<(), std::io::Error> {
 pub fn run_with_args(root_args: &RootArgs) -> Result<(), std::io::Error> {
     match &root_args.subcommand {
         TabCompleteSubCommand::Complete(complete_args) => complete(root_args, complete_args),
-        TabCompleteSubCommand::NuCommands => get_nu_commands(root_args),
-        TabCompleteSubCommand::Init => {
-            init();
-            Ok(())
-        }
+        TabCompleteSubCommand::NuCommands => print_nu_commands(root_args),
+        TabCompleteSubCommand::Init => init(root_args),
     }?;
     Ok(())
 }
@@ -70,22 +67,32 @@ fn get_string_from_files(root_args: &RootArgs) -> String {
 }
 
 static INIT_DATA: &[u8] = include_bytes!("../resource/init.ps1");
-pub fn init() {
-    println!("{}", str::from_utf8(INIT_DATA).unwrap());
+pub fn init(root_args: &RootArgs) -> Result<(), io::Error> {
+    let string_data = str::from_utf8(INIT_DATA).unwrap();
+    let commands = get_nu_commands(root_args)?;
+    let joined_commands = format!("@('{}')", commands.iter().join("', '"));
+    let replaced_string = string_data.replace("::TABCOMPLETE_NU_COMMANDS::", &joined_commands);
+    println!("{}", replaced_string);
+    Ok(())
 }
 
-pub fn get_nu_commands(root_args: &RootArgs) -> Result<(), io::Error> {
-    let _string_from_files = get_string_from_files(root_args);
-    let nu_file_data = if _string_from_files.is_empty() {
+pub fn print_nu_commands(root_args: &RootArgs) -> Result<(), io::Error> {
+    let s = get_nu_commands(root_args)?;
+    println!("{}", s.iter().join("\n"));
+    Ok(())
+}
+
+pub fn get_nu_commands(root_args: &RootArgs) -> Result<HashSet<String>, io::Error> {
+    let string_from_files = get_string_from_files(root_args);
+    let nu_file_data = if string_from_files.is_empty() {
         String::from_utf8_lossy(DEFAULT_CONFIG_DATA).to_string()
     } else {
-        _string_from_files
+        string_from_files
     };
     let re = Regex::new(r#"(?:^|\n)\s*export extern "\S+"#).unwrap();
     let matches = re
         .find_iter(&nu_file_data)
         .map(|x| x.as_str().split('"').nth(1).unwrap());
-    let s: HashSet<&str> = HashSet::from_iter(matches);
-    println!("{}", s.iter().join("\n"));
-    Ok(())
+    let s: HashSet<String> = HashSet::from_iter(matches.map(|m| m.to_string()));
+    Ok(s)
 }

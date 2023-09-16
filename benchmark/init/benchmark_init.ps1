@@ -3,7 +3,7 @@
 Set-Location $PSScriptRoot
 hyperfine `
     --warmup 3 `
-    --runs 25 `
+    --runs 75 `
     -L profile ./../profiles/ProfileBaseline.ps1,./../profiles/ProfilePoshGit.ps1,./../profiles/ProfileTabComplete.ps1 `
     "pwsh -NoProfile -File {profile}" `
     --export-markdown init.md `

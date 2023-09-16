@@ -1,1 +1,1 @@
-Invoke-Expression (&tabcomplete init | Out-String)
+Invoke-Expression (&posh-tabcomplete init | Out-String)

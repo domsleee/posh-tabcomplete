@@ -8,5 +8,5 @@ function GetMs {
 
 function GetSummary {
     param ([double] $poshMs, [double] $tabMs)
-    return "tabcomplete: ${tabMs}ms, posh-git: ${poshMs}ms ($([math]::Round($poshMs / $tabMs, 2))x faster)"
+    return "posh-tabcomplete: ${tabMs}ms, posh-git: ${poshMs}ms ($([math]::Round($poshMs / $tabMs, 2))x faster)"
 }
