@@ -4,19 +4,19 @@ file size: 13297664
 pwsh version: 7.4.0-rc.1
 ## Init
 
-| Command                                                      |   Mean [ms] | Min [ms] | Max [ms] |    Relative |
-| :----------------------------------------------------------- | ----------: | -------: | -------: | ----------: |
-| `pwsh -NoProfile -File ./../profiles/ProfileBaseline.ps1`    | 207.6 ± 6.7 |    186.8 |    233.2 |        1.00 |
-| `pwsh -NoProfile -File ./../profiles/ProfilePoshGit.ps1`     | 487.7 ± 8.0 |    478.1 |    524.3 | 2.35 ± 0.08 |
-| `pwsh -NoProfile -File ./../profiles/ProfileTabComplete.ps1` | 253.4 ± 6.4 |    247.2 |    284.2 | 1.22 ± 0.05 |
+| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+|:---|---:|---:|---:|---:|
+| `pwsh -NoProfile -File ./../profiles/ProfileBaseline.ps1` | 209.9 ± 9.0 | 202.4 | 240.6 | 1.00 |
+| `pwsh -NoProfile -File ./../profiles/ProfilePoshGit.ps1` | 492.2 ± 10.1 | 479.8 | 542.9 | 2.35 ± 0.11 |
+| `pwsh -NoProfile -File ./../profiles/ProfileTabComplete.ps1` | 256.6 ± 9.8 | 247.4 | 292.8 | 1.22 ± 0.07 |
 
-posh-tabcomplete: 45ms, posh-git: 280ms (6.22x faster)
+posh-tabcomplete: 46ms, posh-git: 282ms (6.13x faster)
 ## Complete
 
-| Command                                         |    Mean [ms] | Min [ms] | Max [ms] |    Relative |
-| :---------------------------------------------- | -----------: | -------: | -------: | ----------: |
-| `pwsh -NoProfile -File CompleteBaseline.ps1`    | 523.9 ± 11.8 |    510.4 |    584.0 |        1.00 |
-| `pwsh -NoProfile -File CompletePoshGit.ps1`     | 746.5 ± 28.0 |    721.4 |    843.8 | 1.42 ± 0.06 |
-| `pwsh -NoProfile -File CompleteTabComplete.ps1` | 628.0 ± 19.5 |    609.1 |    736.2 | 1.20 ± 0.05 |
+| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+|:---|---:|---:|---:|---:|
+| `pwsh -NoProfile -File CompleteBaseline.ps1` | 527.9 ± 8.0 | 515.9 | 550.0 | 1.00 |
+| `pwsh -NoProfile -File CompletePoshGit.ps1` | 732.6 ± 15.2 | 711.1 | 784.2 | 1.39 ± 0.04 |
+| `pwsh -NoProfile -File CompleteTabComplete.ps1` | 633.8 ± 18.9 | 613.4 | 713.7 | 1.20 ± 0.04 |
 
-posh-tabcomplete: 104ms, posh-git: 222ms (2.13x faster)
+posh-tabcomplete: 105ms, posh-git: 204ms (1.94x faster)

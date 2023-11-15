@@ -53,7 +53,12 @@ $null = New-Module posh-tabcomplete {
     function Get-CommandNamesUsingRegex {
         $cmdNames = $knownExecutables
         if ($EnableProxyFunctionExpansion) {
-            $cmdNames += Get-ChildItem -Path Function:\ | Where-Object { $_.Definition -match $GitProxyFunctionRegex } | Foreach-Object Name
+            $functionItems = Get-ChildItem Function:\
+            foreach ($item in $functionItems) {
+                if ($item.Definition -match $GitProxyFunctionRegex) {
+                    $cmdNames += $item.Name
+                }
+            }
         }
         return $cmdNames
     }
