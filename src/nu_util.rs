@@ -82,7 +82,7 @@ fn new_engine(pwd: &Path) -> (PathBuf, String, EngineState, Stack) {
         "path".to_string(),
         Value::String {
             val: path_str.to_string(),
-            span: nu_protocol::Span::new(0, path_str.len()),
+            internal_span: nu_protocol::Span::new(0, path_str.len()),
         },
     );
     let merge_result = engine_state.merge_env(&mut stack, &PathBuf::from(&dir_str));
