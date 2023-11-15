@@ -19,6 +19,7 @@ pwsh -Command {
     $fileSize = $(Get-Item $(Get-Command posh-tabcomplete).Path).Length
     Write-Output "file size: $fileSize"
     Write-Output "file size: $fileSize" >> $allBenchmarksFile
+    Write-Output "pwsh version: $((Get-Host).Version.ToString())" >> $allBenchmarksFile
     
     
     Write-Output "## Init`n" >> $allBenchmarksFile

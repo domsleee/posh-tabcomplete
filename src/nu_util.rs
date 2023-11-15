@@ -11,7 +11,7 @@ use nu_protocol::{
 
 pub fn extern_completer(pwd: &Path, nu_file_data: &[u8]) -> NuCompleter {
     let (dir, _, mut engine, mut stack) = new_engine(pwd);
-    engine.currently_parsed_cwd = Some(dir.clone());
+    // engine.currently_parsed_cwd = Some(dir.clone());
     assert!(merge_input(nu_file_data, &mut engine, &mut stack, dir).is_ok());
     NuCompleter::new(std::sync::Arc::new(engine), stack)
 }
@@ -43,7 +43,7 @@ fn merge_input(
         &block,
         PipelineData::Value(
             Value::Nothing {
-                span: Span::unknown(),
+                internal_span: Span::unknown(),
             },
             None
         ),
@@ -64,7 +64,7 @@ fn new_engine(pwd: &Path) -> (PathBuf, String, EngineState, Stack) {
         "PWD".to_string(),
         Value::String {
             val: dir_str.clone(),
-            span: nu_protocol::Span::new(0, dir_str.len()),
+            internal_span: nu_protocol::Span::new(0, dir_str.len()),
         },
     );
 
@@ -74,7 +74,7 @@ fn new_engine(pwd: &Path) -> (PathBuf, String, EngineState, Stack) {
         "Path".to_string(),
         Value::String {
             val: path_str.to_string(),
-            span: nu_protocol::Span::new(0, path_str.len()),
+            internal_span: nu_protocol::Span::new(0, path_str.len()),
         },
     );
     #[cfg(not(windows))]
