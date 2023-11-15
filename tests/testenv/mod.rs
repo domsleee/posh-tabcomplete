@@ -121,7 +121,7 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
         let mut init_str = profile_prefix_data.join("\n\n");
         init_str.push('\n');
         init_str.push_str("Invoke-Expression (&posh-tabcomplete init | Out-String)");
-        let profile_path = root.join("tabcompleteProfile.ps1");
+        let profile_path: PathBuf = root.join("tabcompleteProfile.ps1");
         fs::File::create(&profile_path)?.write_all(init_str.as_bytes())?;
 
         let run_git = |args: &[&str]| {
@@ -145,10 +145,32 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
         run_git(&["checkout", "-b", "testbranch23"]);
         run_git(&["remote", "add", "origin", "test@test.test"]);
 
+        let package_json_path = root.join("package.json");
+        create_package_json(&package_json_path)?;
+
         profile_path
     };
 
     Ok((temp_dir, profile_path))
+}
+
+fn create_package_json(package_json_path: &Path) -> Result<(), io::Error> {
+    let package_json_str = r#"
+    {
+        "name": "my-app",
+        "version": "1.0.0",
+        "main": "index.js",
+        "scripts": {
+            "script1": "node index.js",
+            "script2": "echo \"Error: no test specified\" && exit 1"
+        }
+    }
+    "#;
+
+    let mut file = fs::File::create(package_json_path)?;
+    file.write_all(package_json_str.as_bytes())?;
+
+    Ok(())
 }
 
 fn debug_target_dir() -> PathBuf {
