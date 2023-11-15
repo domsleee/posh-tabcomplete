@@ -167,7 +167,7 @@ fn create_package_json(package_json_path: &Path) -> Result<(), io::Error> {
     }
     "#;
 
-    let mut file = fs::File::create(&package_json_path)?;
+    let mut file = fs::File::create(package_json_path)?;
     file.write_all(package_json_str.as_bytes())?;
 
     Ok(())
