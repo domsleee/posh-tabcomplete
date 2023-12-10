@@ -74,5 +74,6 @@ See [completions.nu](./resource/completions.nu):
   * `push`
   * `rebase`
   * `switch`
+  * `diff`
 * `npm`
   * `run`

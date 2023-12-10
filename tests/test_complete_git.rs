@@ -60,6 +60,14 @@ fn test_rebase_second_arg(shell: &str) {
 }
 
 #[apply(shell_to_use)]
+fn test_diff(shell: &str) {
+    let lines = util::run_command(shell, "Invoke-TabComplete 'git diff '");
+    assert_that!(lines).contains("testbranch".to_string());
+    assert_that!(lines).contains("testbranch23".to_string());
+    assert_that!(lines).contains("HEAD".to_string());
+}
+
+#[apply(shell_to_use)]
 fn test_complete_nongit_command(shell: &str) {
     let testenv = TestEnv::new_with_other_nu(shell);
     let res = testenv
