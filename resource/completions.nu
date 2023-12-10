@@ -281,6 +281,86 @@ extern "git rebase" [
 	--no-ff								# No fast-forward
 ]
 
+
+# Show changes between commits, commit and working tree, etc
+extern "git diff" [
+	ref: string@"nu-complete git switchable branches"    # branch to merge with
+	--abbrev					# Show only a partial prefix instead of the full 40-byte hexadecimal object name
+	--binary					# Output a binary diff that can be applied with "git-apply
+	--check					# Warn if changes introduce conflict markers or whitespace errors
+	--color					# Show colored diff
+	--color-moved					# Moved lines of code are colored differently
+	--color-words					# Equivalent to --word-diff=color plus --word-diff-regex=<regex>
+	--compact-summary					# Output a condensed summary of extended header information
+	--dst-prefix					# Show the given destination prefix instead of "b/
+	--ext-diff					# Allow an external diff helper to be executed
+	--find-copies-harder					# Inspect unmodified files as candidates for the source of copy
+	--find-object					# Look for differences that change the number of occurrences of the object
+	--full-index					# Show the full pre- and post-image blob object names on the "index" line
+	--histogram					# Generate a diff using the "histogram diff" algorithm
+	--ignore-blank-lines					# Ignore changes whose lines are all blank
+	--ignore-cr-at-eol					# Ignore carrige-return at the end of line when doing a comparison
+	--ignore-space-at-eol					# Ignore changes in whitespace at EOL
+	--indent-heuristic					# Enable the heuristic that shift diff hunk boundaries
+	--inter-hunk-context					# Show the context between diff hunks, up to the specified number of lines
+	--ita-invisible-in-index					# Make the entry appear as a new file in "git diff" and non-existent in "git diff -l cached
+	--line-prefix					# Prepend an additional prefix to every line of output
+	--minimal					# Spend extra time to make sure the smallest possible diff is produced
+	--name-only					# Show only names of changed files
+	--name-status					# Show only names and status of changed files
+	--no-color					# Turn off colored diff
+	--no-ext-diff					# Disallow external diff drivers
+	--no-indent-heuristic					# Disable the indent heuristic
+	--no-prefix					# Do not show any source or destination prefix
+	--no-renames					# Turn off rename detection
+	--no-textconv					# Disallow external text conversion filters to be run when comparing binary files
+	--numstat					# Shows number of added/deleted lines in decimal notation
+	--patch-with-raw					# Synonym for -p --raw
+	--patch-with-stat					# Synonym for -p --stat
+	--patience					# Generate a diff using the "patience diff" algorithm
+	--pickaxe-all					# When -S or -G finds a change, show all the changes in that changeset
+	--pickaxe-regex					# Treat the <string> given to -S as an extended POSIX regular expression to match
+	--relative					# Exclude changes outside the directory and show relative pathnames
+	--shortstat					# Output only the last line of the --stat format containing total number of modified files
+	--src-prefix					# Show the given source prefix instead of "a/
+	--stat					# Generate a diffstat
+	--stat					# Generate a diffstat
+	--summary					# Output a condensed summary of extended header information
+	--textconv					# Allow external text conversion filters to be run when comparing binary files
+	--word-diff					# Show a word diff
+	--word-diff-regex					# Use <regex> to decide what a word is
+	--text(-a)					# Treat all files as text
+	--break-rewrites(-B)					# Break complete rewrite changes into pairs of delete and create
+	--ignore-space-change(-b)					# Ignore changes in amount of whitespace
+	--find-copies(-C)					# Detect copies as well as renames
+	--irreversible-delete(-D)					# Omit the preimage for deletes
+	--find-renames(-M)					# Detect and report renames
+	--function-context(-W)					# Show whole surrounding functions of changes
+	--ignore-all-space(-w)					# Ignore whitespace when comparing lines
+	--anchored					# Generate a diff using the "anchored diff" algorithm
+	--cached					# Show diff of changes in the index
+	--staged					# Show diff of changes in the index
+	--no-index					# Compare two paths on the filesystem
+	--exit-code					# Exit with 1 if there were differences or 0 if no differences
+	--quiet					# Disable all output of the program, implies --exit-code
+	--base(-1)					# Compare the working tree with the "base" version
+	--ours(-2)					# Compare the working tree with the "our branch
+	--theirs(-3)					# Compare the working tree with the "their branch
+	--cached					# Visually show diff of changes in the index
+	--gui(-g)					# Use `diff.guitool` instead of `diff.tool`
+	--dir-diff(-d)					# Perform a full-directory diff
+	--prompt					# Prompt before each invocation of the diff tool
+	--no-prompt(-y)					# Do not prompt before launching a diff tool
+	--symlinks					# Use symlinks in dir-diff mode
+	--tool-help					# Print a list of diff tools that may be used with `--tool`
+	--trust-exit-code					# Exit when an invoked diff tool returns a non-zero exit code
+	--extcmd(-x)					# Specify a custom command for viewing diffs
+	--no-gui					# Overrides --gui setting
+	--creation-factor					# Percentage by which creation is weighted
+	--no-dual-color					# Use simple diff colors
+	...args
+]
+
 ### FROM AUTOCOMPLETIONS https://github.com/nushell/nu_scripts/tree/main/custom-completions/auto-generate
 ### Please fix these if they are wrong
 
@@ -698,83 +778,6 @@ extern "git describe" [
 	--exclude					# Do not consider tags matching the given glob pattern
 	--always					# Show uniquely abbreviated commit object as fallback
 	--first-parent					# Follow only the first parent of a merge commit
-	...args
-]
-# Show changes between commits, commit and working tree, etc
-extern "git diff" [
-	--abbrev					# Show only a partial prefix instead of the full 40-byte hexadecimal object name
-	--binary					# Output a binary diff that can be applied with "git-apply
-	--check					# Warn if changes introduce conflict markers or whitespace errors
-	--color					# Show colored diff
-	--color-moved					# Moved lines of code are colored differently
-	--color-words					# Equivalent to --word-diff=color plus --word-diff-regex=<regex>
-	--compact-summary					# Output a condensed summary of extended header information
-	--dst-prefix					# Show the given destination prefix instead of "b/
-	--ext-diff					# Allow an external diff helper to be executed
-	--find-copies-harder					# Inspect unmodified files as candidates for the source of copy
-	--find-object					# Look for differences that change the number of occurrences of the object
-	--full-index					# Show the full pre- and post-image blob object names on the "index" line
-	--histogram					# Generate a diff using the "histogram diff" algorithm
-	--ignore-blank-lines					# Ignore changes whose lines are all blank
-	--ignore-cr-at-eol					# Ignore carrige-return at the end of line when doing a comparison
-	--ignore-space-at-eol					# Ignore changes in whitespace at EOL
-	--indent-heuristic					# Enable the heuristic that shift diff hunk boundaries
-	--inter-hunk-context					# Show the context between diff hunks, up to the specified number of lines
-	--ita-invisible-in-index					# Make the entry appear as a new file in "git diff" and non-existent in "git diff -l cached
-	--line-prefix					# Prepend an additional prefix to every line of output
-	--minimal					# Spend extra time to make sure the smallest possible diff is produced
-	--name-only					# Show only names of changed files
-	--name-status					# Show only names and status of changed files
-	--no-color					# Turn off colored diff
-	--no-ext-diff					# Disallow external diff drivers
-	--no-indent-heuristic					# Disable the indent heuristic
-	--no-prefix					# Do not show any source or destination prefix
-	--no-renames					# Turn off rename detection
-	--no-textconv					# Disallow external text conversion filters to be run when comparing binary files
-	--numstat					# Shows number of added/deleted lines in decimal notation
-	--patch-with-raw					# Synonym for -p --raw
-	--patch-with-stat					# Synonym for -p --stat
-	--patience					# Generate a diff using the "patience diff" algorithm
-	--pickaxe-all					# When -S or -G finds a change, show all the changes in that changeset
-	--pickaxe-regex					# Treat the <string> given to -S as an extended POSIX regular expression to match
-	--relative					# Exclude changes outside the directory and show relative pathnames
-	--shortstat					# Output only the last line of the --stat format containing total number of modified files
-	--src-prefix					# Show the given source prefix instead of "a/
-	--stat					# Generate a diffstat
-	--stat					# Generate a diffstat
-	--summary					# Output a condensed summary of extended header information
-	--textconv					# Allow external text conversion filters to be run when comparing binary files
-	--word-diff					# Show a word diff
-	--word-diff-regex					# Use <regex> to decide what a word is
-	--text(-a)					# Treat all files as text
-	--break-rewrites(-B)					# Break complete rewrite changes into pairs of delete and create
-	--ignore-space-change(-b)					# Ignore changes in amount of whitespace
-	--find-copies(-C)					# Detect copies as well as renames
-	--irreversible-delete(-D)					# Omit the preimage for deletes
-	--find-renames(-M)					# Detect and report renames
-	--function-context(-W)					# Show whole surrounding functions of changes
-	--ignore-all-space(-w)					# Ignore whitespace when comparing lines
-	--anchored					# Generate a diff using the "anchored diff" algorithm
-	--cached					# Show diff of changes in the index
-	--staged					# Show diff of changes in the index
-	--no-index					# Compare two paths on the filesystem
-	--exit-code					# Exit with 1 if there were differences or 0 if no differences
-	--quiet					# Disable all output of the program, implies --exit-code
-	--base(-1)					# Compare the working tree with the "base" version
-	--ours(-2)					# Compare the working tree with the "our branch
-	--theirs(-3)					# Compare the working tree with the "their branch
-	--cached					# Visually show diff of changes in the index
-	--gui(-g)					# Use `diff.guitool` instead of `diff.tool`
-	--dir-diff(-d)					# Perform a full-directory diff
-	--prompt					# Prompt before each invocation of the diff tool
-	--no-prompt(-y)					# Do not prompt before launching a diff tool
-	--symlinks					# Use symlinks in dir-diff mode
-	--tool-help					# Print a list of diff tools that may be used with `--tool`
-	--trust-exit-code					# Exit when an invoked diff tool returns a non-zero exit code
-	--extcmd(-x)					# Specify a custom command for viewing diffs
-	--no-gui					# Overrides --gui setting
-	--creation-factor					# Percentage by which creation is weighted
-	--no-dual-color					# Use simple diff colors
 	...args
 ]
 # Open diffs in a visual tool
