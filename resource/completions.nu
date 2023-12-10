@@ -12,6 +12,10 @@ def "nu-complete git switchable branches" [] {
    | where {|branch| $branch != "HEAD"}
 }
 
+def "nu-complete git switchable branches with head" [] {
+	["HEAD"] ++ (nu-complete git switchable branches)
+}
+
 def "nu-complete git remotes" [] {
   ^git remote | lines | each { |line| $line | str trim }
 }
@@ -284,7 +288,7 @@ extern "git rebase" [
 
 # Show changes between commits, commit and working tree, etc
 extern "git diff" [
-	ref: string@"nu-complete git switchable branches"    # branch to merge with
+	commit: string@"nu-complete git switchable branches with head"    # commit to diff with
 	--abbrev					# Show only a partial prefix instead of the full 40-byte hexadecimal object name
 	--binary					# Output a binary diff that can be applied with "git-apply
 	--check					# Warn if changes introduce conflict markers or whitespace errors
