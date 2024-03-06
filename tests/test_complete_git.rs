@@ -73,6 +73,49 @@ fn test_complete_nongit_command(shell: &str) {
     let res = testenv
         .run_with_profile("Invoke-TabComplete 'burrito -'")
         .unwrap();
-    let lines = res.stdout.lines().map(|x| x.unwrap()).collect_vec();
+    let lines: Vec<String> = res.stdout.lines().map(|x| x.unwrap()).collect_vec();
     assert_that!(lines).contains("--hello-there".to_string());
+}
+
+#[apply(shell_to_use)]
+fn test_file_completion_edgecases(shell: &str) -> std::io::Result<()> {
+    assert_file_completion(
+        shell,
+        "myfile with spaces.txt",
+        "'myfile with spaces.txt'",
+        "my",
+    )?;
+    assert_file_completion(
+        shell,
+        "myfilewith'quote.txt",
+        "'myfilewith''quote.txt'",
+        "my",
+    )?;
+    assert_file_completion(
+        shell,
+        "myfile with ' quote spaces.txt",
+        "'myfile with '' quote spaces.txt'",
+        "my",
+    )?;
+
+    // seems broken in nushell?
+    // assert_file_completion(shell, "myfilewith`backtick.txt", "'myfilewith`backtick.txt'", "my")?;
+
+    Ok(())
+}
+
+fn assert_file_completion(
+    shell: &str,
+    filename: &str,
+    expected: &str,
+    completion: &str,
+) -> std::io::Result<()> {
+    let testenv = TestEnv::new(shell);
+    std::fs::write(testenv.temp_dir.path().join(filename), "AAA")?;
+    let res = testenv
+        .run_with_profile(&format!("Invoke-TabComplete 'git add {completion}'"))
+        .unwrap();
+    let lines: Vec<String> = res.stdout.lines().map(|x| x.unwrap()).collect_vec();
+    assert_that!(lines).is_equal_to(vec![expected.to_string()]);
+    Ok(())
 }

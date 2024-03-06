@@ -47,11 +47,22 @@ fn complete(root_args: &RootArgs, complete_args: &CompleteArgs) -> Result<(), st
     let suggestions = completer.complete(arg_str, arg_str.len());
     let suggestion_strings: Vec<String> = suggestions
         .iter()
-        .map(|x| x.value.clone().split(' ').last().unwrap().to_string())
+        .map(|x| maybe_process_path(&x.value.clone().to_string()))
         .collect();
 
     println!("{}", suggestion_strings.join("\n"));
     Ok(())
+}
+
+fn maybe_process_path(arg: &str) -> String {
+    if arg.len() > 1 && arg.starts_with('`') && arg.ends_with('`') {
+        // replace the start and end backticks with single quotes
+        // also replace all single quotes with double single quote
+        let replaced_single_quotes = &arg[1..arg.len() - 1].replace('\'', "''");
+        return format!("'{replaced_single_quotes}'",);
+    }
+
+    arg.to_string()
 }
 
 fn get_string_from_files(root_args: &RootArgs) -> String {
