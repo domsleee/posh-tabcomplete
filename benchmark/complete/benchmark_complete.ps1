@@ -1,5 +1,6 @@
 
 . $PSScriptRoot/../setupErrorHandling.ps1
+. $PSScriptRoot/../util.ps1
 $childRepoDir = "$PSScriptRoot/repo"
 if (Test-Path "$childRepoDir") {
     Remove-Item -r -fo "$childRepoDir"
@@ -19,13 +20,12 @@ git commit -m "init"
 Set-Location "$PSScriptRoot"
 hyperfine `
     --warmup 3 `
-    --runs 75 `
+    --runs (GetNumRuns) `
     -L script CompleteBaseline.ps1,CompletePoshGit.ps1,CompleteTabComplete.ps1 `
     "pwsh -NoProfile -File {script}" `
     --export-markdown $PSScriptRoot/complete.md `
     --export-csv $PSScriptRoot/complete.csv
 
-. $PSScriptRoot/../util.ps1
 $csv = "$PSScriptRoot/complete.csv"
 $tabMs = GetMs $csv "CompleteBaseline.ps1" "CompleteTabComplete.ps1";
 $poshMs = GetMs $csv "CompleteBaseline.ps1" "CompletePoshGit.ps1";
