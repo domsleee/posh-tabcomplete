@@ -62,7 +62,7 @@ fn maybe_process_path(arg: &str) -> String {
         return format!("'{replaced_single_quotes}'",);
     }
 
-    arg.to_string()
+    arg.split(' ').last().unwrap().to_string()
 }
 
 fn get_string_from_files(root_args: &RootArgs) -> String {
