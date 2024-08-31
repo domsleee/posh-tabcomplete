@@ -53,8 +53,8 @@ fn merge_input(
             Value::Nothing {
                 internal_span: Span::unknown(),
             },
-            None
-        )
+            None,
+        ),
     );
 
     debug_assert!(res.is_ok());
@@ -103,5 +103,4 @@ fn add_variable_to_stack(stack: &mut Stack, key: &str, value: &str) {
             internal_span: nu_protocol::Span::new(0, value.len()),
         },
     );
-
 }
