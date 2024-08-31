@@ -50,8 +50,8 @@ To run these, run `./benchmark/benchmark_all.ps1`
 
 | Benchmark                                            | Results                                                |
 | ---------------------------------------------------- | ------------------------------------------------------ |
-| `benchmark/init` - startup time                      | posh-tabcomplete: 43ms, posh-git: 271ms (6.3x faster)  |
-| `benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 83ms, posh-git: 179ms (2.16x faster) |
+| `benchmark/init` - startup time                      | posh-tabcomplete: 42ms, posh-git: 268ms (6.38x faster) |
+| `benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 80ms, posh-git: 176ms (2.2x faster)  |
 
 ## Aliases / Function support
 Functions are supported. For example, the completion of `gco` in the demo is:
