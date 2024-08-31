@@ -6,27 +6,26 @@ license = "MIT OR Apache-2.0"
 description = "Blazing fast tab completion for powershell."
 repository = "https://github.com/domsleee/posh-tabcomplete"
 readme = "README.md"
+rust-version = "1.78.0"
 
 [dependencies]
-clap = { version = "4.5.3", features = ["derive"] }
+clap = { version = "4.5.16", features = ["derive"] }
 itertools = "0.12"
-log = "0.4.21"
-nu-cli = "0.91.0"
-nu-command = "0.91.0"
-nu-cmd-lang = "0.91.0"
-nu-engine = "0.91.0"
-nu-parser = "0.91.0"
-nu-protocol = "0.91.0"
-reedline = "0.30.0"
-regex = "1.10.3"
-env_logger = "0.11.3"
+log = "0.4"
+nu-cli = "0.97.1"
+nu-command = "0.97.1"
+nu-cmd-lang = "0.97.1"
+nu-engine = "0.97.1"
+nu-parser = "0.97.1"
+nu-protocol = "0.97.1"
+reedline = { version = "0.34.0", features = ["bashisms", "sqlite"] }
+regex = "1.10.6"
+env_logger = "0.11.5"
 
 [dev-dependencies]
-diff = "0.1"
-tempfile = "3.10"
-filetime = "0.2.23"
-rstest = "0.18.2"
-rstest_reuse = "0.6.0"
+tempfile = "3.12"
+rstest = "0.22.0"
+rstest_reuse = "0.7.0"
 speculoos = "0.11.0"
 
 [[bin]]
