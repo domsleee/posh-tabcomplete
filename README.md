@@ -48,10 +48,10 @@ The completions packaged with the binary in [completions.nu](./resource/completi
 ## Benchmarks
 To run these, run `./benchmark/benchmark_all.ps1`
 
-| Benchmark                                            | Results                                                 |
-| ---------------------------------------------------- | ------------------------------------------------------- |
-| `benchmark/init` - startup time                      | posh-tabcomplete: 45ms, posh-git: 280ms (6.22x faster)  |
-| `benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 104ms, posh-git: 222ms (2.13x faster) |
+| Benchmark                                            | Results                                                |
+| ---------------------------------------------------- | ------------------------------------------------------ |
+| `benchmark/init` - startup time                      | posh-tabcomplete: 42ms, posh-git: 268ms (6.38x faster) |
+| `benchmark/complete` - tab completion (100 branches) | posh-tabcomplete: 80ms, posh-git: 176ms (2.2x faster)  |
 
 ## Aliases / Function support
 Functions are supported. For example, the completion of `gco` in the demo is:
