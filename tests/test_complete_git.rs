@@ -12,6 +12,13 @@ mod testenv;
 pub use testenv::*;
 
 #[apply(shell_to_use)]
+fn test_primary_command_is_not_included(shell: &str) {
+    let lines = util::run_command(shell, "Invoke-TabComplete 'git check'");
+    assert_that!(lines).does_not_contain("git checkout".to_string());
+    assert_that!(lines).contains("checkout".to_string());
+}
+
+#[apply(shell_to_use)]
 fn test_checkout_branches(shell: &str) {
     let lines = util::run_command(shell, "Invoke-TabComplete 'git checkout '");
     assert_that!(lines).contains("testbranch".to_string());
