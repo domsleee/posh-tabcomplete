@@ -2,9 +2,9 @@
 extern crate log;
 use args::RootArgs;
 use clap::Parser;
+use completer::get_suggestions;
 use itertools::Itertools;
 use posh_tabcomplete::TABCOMPLETE_FILE;
-use reedline::Completer;
 use regex::Regex;
 use std::{
     collections::HashSet,
@@ -15,6 +15,7 @@ use std::{
 use crate::args::{CompleteArgs, TabCompleteSubCommand};
 
 mod args;
+mod completer;
 mod nu_util;
 use std::str;
 
@@ -32,7 +33,7 @@ pub fn run_with_args(root_args: &RootArgs) -> Result<(), std::io::Error> {
     Ok(())
 }
 
-static DEFAULT_CONFIG_DATA: &[u8] = include_bytes!("../resource/completions.nu");
+pub static DEFAULT_CONFIG_DATA: &[u8] = include_bytes!("../resource/completions.nu");
 fn complete(root_args: &RootArgs, complete_args: &CompleteArgs) -> Result<(), std::io::Error> {
     let arg_str = &complete_args.args_str;
     let pwd = env::current_dir()?;
@@ -43,26 +44,9 @@ fn complete(root_args: &RootArgs, complete_args: &CompleteArgs) -> Result<(), st
     } else {
         string_from_files.as_bytes()
     };
-    let mut completer = nu_util::extern_completer(&pwd, nu_file_data);
-    let suggestions = completer.complete(arg_str, arg_str.len());
-    let suggestion_strings: Vec<String> = suggestions
-        .iter()
-        .map(|x| maybe_process_path(&x.value.clone().to_string()))
-        .collect();
-
+    let suggestion_strings: Vec<String> = get_suggestions(nu_file_data, &pwd, arg_str);
     println!("{}", suggestion_strings.join("\n"));
     Ok(())
-}
-
-fn maybe_process_path(arg: &str) -> String {
-    if arg.len() > 1 && arg.starts_with('`') && arg.ends_with('`') {
-        // replace the start and end backticks with single quotes
-        // also replace all single quotes with double single quote
-        let replaced_single_quotes = &arg[1..arg.len() - 1].replace('\'', "''");
-        return format!("'{replaced_single_quotes}'",);
-    }
-
-    arg.split(' ').last().unwrap().to_string()
 }
 
 fn get_string_from_files(root_args: &RootArgs) -> String {

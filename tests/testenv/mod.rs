@@ -35,6 +35,22 @@ impl TestEnv {
 
         let (temp_dir, profile_path) =
             create_working_dir(profile_prefix_data).expect("create successful");
+
+        let package_json_path = temp_dir.path().join("package.json");
+        let package_json_str = r#"
+        {
+            "name": "my-app",
+            "version": "1.0.0",
+            "main": "index.js",
+            "scripts": {
+                "script1": "node index.js",
+                "script2": "echo \"Error: no test specified\" && exit 1"
+            }
+        }
+        "#;
+        create_package_json(&package_json_path, package_json_str)
+            .expect("Able to create package json");
+
         TestEnv {
             shell: shell.to_string(),
             temp_dir,
@@ -74,7 +90,7 @@ impl TestEnv {
     }
 
     pub fn run_with_profile(&self, command: &str) -> Result<Output, io::Error> {
-        let root = self.temp_dir.path();
+        let root: &Path = self.temp_dir.path();
         let file_contents = format!(". {}\n{command}", self.profile_path.to_str().unwrap());
         let file_path = root.join("file.ps1");
         fs::File::create(&file_path)?.write_all(file_contents.as_bytes())?;
@@ -96,6 +112,12 @@ impl TestEnv {
         }
 
         Ok(output)
+    }
+
+    pub fn create_package_json(self, package_json_contents: &str) -> Result<TestEnv, io::Error> {
+        let package_json_path = self.temp_dir.path().join("package.json");
+        create_package_json(&package_json_path, package_json_contents)?;
+        Ok(self)
     }
 }
 
@@ -145,30 +167,18 @@ fn create_working_dir(profile_prefix_data: Vec<&str>) -> Result<(TempDir, PathBu
         run_git(&["checkout", "-b", "testbranch23"]);
         run_git(&["remote", "add", "origin", "test@test.test"]);
 
-        let package_json_path = root.join("package.json");
-        create_package_json(&package_json_path)?;
-
         profile_path
     };
 
     Ok((temp_dir, profile_path))
 }
 
-fn create_package_json(package_json_path: &Path) -> Result<(), io::Error> {
-    let package_json_str = r#"
-    {
-        "name": "my-app",
-        "version": "1.0.0",
-        "main": "index.js",
-        "scripts": {
-            "script1": "node index.js",
-            "script2": "echo \"Error: no test specified\" && exit 1"
-        }
-    }
-    "#;
-
+fn create_package_json(
+    package_json_path: &Path,
+    package_json_contents: &str,
+) -> Result<(), io::Error> {
     let mut file = fs::File::create(package_json_path)?;
-    file.write_all(package_json_str.as_bytes())?;
+    file.write_all(package_json_contents.as_bytes())?;
 
     Ok(())
 }
