@@ -98,3 +98,20 @@ fn test_npm_run_ampersand(shell: &str) -> Result<(), std::io::Error> {
     assert_that!(&lines).equals_iterator(&[r#"'with&ampersand'"#.to_string()].iter());
     Ok(())
 }
+
+#[apply(shell_to_use)]
+fn test_npm_run_dollar(shell: &str) -> Result<(), std::io::Error> {
+    let test_env = TestEnv::new(shell).create_package_json(
+        r#"
+            {
+                "scripts": {
+                    "with$dollar": "echo hello world",
+                }
+            }
+        "#,
+    )?;
+
+    let lines = util::run_with_test_env(&test_env, "Invoke-TabComplete 'npm run with'");
+    assert_that!(&lines).equals_iterator(&[r#"'with$dollar'"#.to_string()].iter());
+    Ok(())
+}

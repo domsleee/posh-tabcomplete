@@ -31,7 +31,8 @@ fn get_suggestion_string(suggestion: &Suggestion) -> String {
             || arg.contains('\"')
             || arg.contains('\'')
             || arg.contains('`')
-            || arg.contains('&'))
+            || arg.contains('&')
+            || arg.contains('$'))
     {
         let replaced_arg = arg.replace('\'', "''");
         return format!("'{replaced_arg}'");
