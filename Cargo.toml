@@ -9,8 +9,8 @@ readme = "README.md"
 rust-version = "1.78.0"
 
 [dependencies]
-clap = { version = "4.5.16", features = ["derive"] }
-itertools = "0.12"
+clap = { version = "4.5.17", features = ["derive"] }
+itertools = "0.13"
 log = "0.4"
 nu-cli = "0.97.1"
 nu-command = "0.97.1"
