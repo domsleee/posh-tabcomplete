@@ -60,7 +60,11 @@ jobs:
           rustup component add rust-src --target ${{ matrix.target }}
 
       - name: Build binary
-        run: cargo build -Z build-std=core,std,alloc,proc_macro,panic_abort -Z build-std-features=panic_immediate_abort --release --locked --target=${{ matrix.target }} --color=always
+        run: |
+          cargo build \
+          -Z build-std=core,std,alloc,proc_macro,panic_abort \
+          -Z build-std-features=panic_immediate_abort \
+          --release --locked --target=${{ matrix.target }} --color=always
 
       - name: Install cargo-deb
         if: ${{ matrix.deb == true }}
