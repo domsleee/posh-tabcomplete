@@ -4,7 +4,7 @@ use nu_cli::NuCompleter;
 use nu_engine::eval_block;
 use nu_parser::parse;
 use nu_protocol::debugger::WithoutDebug;
-use nu_protocol::report_error;
+use nu_protocol::report_parse_error;
 use nu_protocol::{
     engine::{EngineState, Stack, StateWorkingSet},
     PipelineData, ShellError, Span, Value,
@@ -37,7 +37,7 @@ fn merge_input(
         let mut working_set = StateWorkingSet::new(engine_state);
         let block = parse(&mut working_set, None, input, false);
         if let Some(err) = working_set.parse_errors.first() {
-            report_error(&working_set, err);
+            report_parse_error(&working_set, err);
             std::process::exit(1);
         }
         (block, working_set.render())
