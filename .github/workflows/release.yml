@@ -61,7 +61,7 @@ jobs:
 
       - name: Build binary
         # use optimize_for_size in the future (https://github.com/rust-lang/rust/issues/125612)
-        run: cargo build --release -Z build-std=core,std,alloc,proc_macro,panic_abort -Z build-std-features=panic_immediate_abort --locked --target=${{ matrix.target }} --color=always
+        run: cargo build --release -Z build-std=core,std,alloc,proc_macro,panic_abort -Z build-std-features=panic_immediate_abort,optimize_for_size --locked --target=${{ matrix.target }} --color=always
 
       - name: Install cargo-deb
         if: ${{ matrix.deb == true }}

@@ -9,21 +9,21 @@ readme = "README.md"
 
 [dependencies]
 clap = { version = "4.5.18", features = ["derive"] }
-itertools = "0.13"
+itertools = "0.14"
 log = "0.4"
-nu-cli = "0.98.0"
-nu-command = "0.98.0"
-nu-cmd-lang = "0.98.0"
-nu-engine = "0.98.0"
-nu-parser = "0.98.0"
-nu-protocol = "0.98.0"
-reedline = { version = "0.35.0", features = ["bashisms", "sqlite"] }
+nu-cli = "0.101.0"
+nu-command = "0.101.0"
+nu-cmd-lang = "0.101.0"
+nu-engine = "0.101.0"
+nu-parser = "0.101.0"
+nu-protocol = "0.101.0"
+reedline = { version = "0.38.0", features = ["bashisms", "sqlite"] }
 regex = "1.10.6"
 env_logger = "0.11.5"
 
 [dev-dependencies]
 tempfile = "3.12"
-rstest = "0.22.0"
+rstest = "0.24.0"
 rstest_reuse = "0.7.0"
 speculoos = "0.11.0"
 

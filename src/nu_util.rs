@@ -19,8 +19,8 @@ const ENV_PATH_NAME_SECONDARY: &str = "PATH";
 const ENV_PATH_NAME: &str = "PATH";
 
 pub fn extern_completer(pwd: &Path, nu_file_data: &[u8]) -> NuCompleter {
-    let (dir, _, mut engine, mut stack) = new_engine(pwd);
-    assert!(merge_input(nu_file_data, &mut engine, &mut stack, dir).is_ok());
+    let (_, _, mut engine, mut stack) = new_engine(pwd);
+    assert!(merge_input(nu_file_data, &mut engine, &mut stack).is_ok());
     NuCompleter::new(std::sync::Arc::new(engine), std::sync::Arc::new(stack))
 }
 
@@ -31,7 +31,6 @@ fn merge_input(
     input: &[u8],
     engine_state: &mut EngineState,
     stack: &mut Stack,
-    dir: PathBuf,
 ) -> Result<(), ShellError> {
     let (block, delta) = {
         let mut working_set = StateWorkingSet::new(engine_state);
@@ -59,7 +58,7 @@ fn merge_input(
 
     debug_assert!(res.is_ok());
 
-    engine_state.merge_env(stack, &dir)
+    engine_state.merge_env(stack)
 }
 
 fn new_engine(pwd: &Path) -> (PathBuf, String, EngineState, Stack) {
@@ -71,7 +70,7 @@ fn new_engine(pwd: &Path) -> (PathBuf, String, EngineState, Stack) {
 
     add_environment_variables_to_stack(&mut stack);
 
-    let merge_result = engine_state.merge_env(&mut stack, &PathBuf::from(&dir_str));
+    let merge_result = engine_state.merge_env(&mut stack);
     assert!(merge_result.is_ok());
 
     (PathBuf::from(&dir_str), dir_str, engine_state, stack)
