@@ -2132,3 +2132,45 @@ export extern "cargo add" [
   --target                # Add as dependency to the given target platform
   ...args
 ]
+
+export extern "bun run" [
+  command?: string@"nu-complete npm run"
+  --watch                         # Automatically restart the process on file change
+  --hot                           # Enable auto reload in the Bun runtime, test runner, or bundler
+  --no-clear-screen               # Disable clearing the terminal screen on reload when --hot or --watch is enabled
+  --smol                          # Use less memory, but run garbage collection more often
+  --preload(-r): string           # Import a module before other modules are loaded
+  --require: string               # Alias of --preload, for Node.js compatibility
+  --inspect: string               # Activate Bun's debugger
+  --inspect-wait: string          # Activate Bun's debugger, wait for a connection before executing
+  --inspect-brk: string           # Activate Bun's debugger, set breakpoint on first line of code and wait
+  --if-present                    # Exit without an error if the entrypoint does not exist
+  --no-install                    # Disable auto install in the Bun runtime
+  --install: string               # Configure auto-install behavior. One of "auto" (default, auto-installs when no node_modules), "fallback" (missing packages only), "force" (always).
+  -i                              # Auto-install dependencies during execution. Equivalent to --install=fallback.
+  --eval(-e): string              # Evaluate argument as a script
+  --print(-p): string             # Evaluate argument as a script and print the result
+  --prefer-offline                # Skip staleness checks for packages in the Bun runtime and resolve from disk
+  --prefer-latest                 # Use the latest matching versions of packages in the Bun runtime, always checking npm
+  --port: string                  # Set the default port for Bun.serve
+  --conditions: string            # Pass custom conditions to resolve
+  --fetch-preconnect: string      # Preconnect to a URL while code is loading
+  --max-http-header-size: string  # Set the maximum size of HTTP headers in bytes. Default is 16KiB
+  --dns-result-order: string      # Set the default order of DNS lookup results. Valid orders: verbatim (default), ipv4first, ipv6first
+  --expose-gc                     # Expose gc() on the global object. Has no effect on Bun.gc().
+  --no-deprecation                # Suppress all reporting of the custom deprecation.
+  --throw-deprecation             # Determine whether or not deprecation warnings result in errors.
+  --title: string                 # Set the process title
+  --zero-fill-buffers             # Boolean to force Buffer.allocUnsafe(size) to be zero-filled.
+  --silent                        # Don't print the script command
+  --elide-lines: string           # Number of lines of script output shown when using --filter (default: 10). Set to 0 to show all lines.
+  --version(-v)                   # Print version and exit
+  --revision                      # Print version with revision and exit
+  --filter(-F): string            # Run a script in all workspace packages matching the pattern
+  --bun(-b)                       # Force a script or package to use Bun's runtime instead of Node.js (via symlinking node)
+  --shell: string                 # Control the shell used for package.json scripts. Supports either 'bun' or 'system'
+  --env-file: string              # Load environment variables from the specified file(s)
+  --cwd: string                   # Absolute path to resolve files & entry points from. This just changes the process' cwd.
+  --config(-c): string            # Specify path to Bun config file. Default $cwd/bunfig.toml
+  --help(-h)                      # Display this menu and exit
+]
